@@ -2,10 +2,9 @@ import pandas as pd
 import numpy as np 
 import re
 
-from match_utils import GetMaps
-from match_utils import GetPatchVer
-from match_utils import GetAgents
-from match_utils import Scores
+from match_utils import GetMaps, GetAgents, GetPatchVer, Scores
+
+MATCH_ECON_SUFIX = '?game=all&tab=economy'
 
 ## Clean Economy Stats
 ## Create Win, Played, WinRate columns for each Buy Type
@@ -54,7 +53,7 @@ def MatchEconStats(match_url):
   
   patch = GetPatchVer(match_url)
 
-  maps, map_adv = GetMaps(match_url)
+  maps, _ = GetMaps(match_url)
   all_econ_stats = CleanEconStats(df_econ[-1], patch)
   all_econ_stats['Map'] = 'MATCH'
   n_maps = int(all_econ_stats['Num_maps'][0]) 
@@ -72,4 +71,4 @@ def MatchEconStats(match_url):
     for x in range(n_maps):
       map_econ_stats[x]['Map'] = maps[x]
 
-  return [all_econ_stats, map_econ_stats
+  return [all_econ_stats, map_econ_stats]

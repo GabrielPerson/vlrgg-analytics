@@ -1,3 +1,14 @@
+## Web Scraping
+import bs4
+from bs4 import BeautifulSoup as soup
+import urllib
+from urllib.request import urlopen as uReq
+
+import pandas as pd 
+import re
+
+MAPS = ['Haven', 'Bind', 'Split', 'Ascent', 'Icebox']
+
 ## Retrieve Match Map names
 def GetMaps(url_match):
 
@@ -5,7 +16,7 @@ def GetMaps(url_match):
     client = uReq(url_match)
     page_html = client.read()
   except urllib.error.URLError as err:
-    print("HTTP Error 404: " + str(event_url) + " Not Found")
+    print("HTTP Error 404: " + str(url_match) + " Not Found")
     client.close()
   client.close()
 
@@ -92,7 +103,7 @@ def Scores(url_match):
 
   for tag in all_scores: scores.append(int(tag.text))
   
-  return score
+  return scores
 
 ## Get Valorant Patch Version of a match.
 def GetPatchVer(url_match):
@@ -103,7 +114,7 @@ def GetPatchVer(url_match):
     client = uReq(url_match)
     page_html = client.read()
   except urllib.error.URLError as err:
-    print("HTTP Error 404: " + str(event_url) + " Not Found")
+    print("HTTP Error 404: " + str(url_match) + " Not Found")
     client.close()
   client.close()
 

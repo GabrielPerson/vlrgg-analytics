@@ -1,3 +1,14 @@
+'''## Web Scraping
+import bs4
+from bs4 import BeautifulSoup as soup
+import urllib
+from urllib.request import urlopen as uReq
+
+import pandas as pd 
+
+
+MAPS = ['Haven', 'Bind', 'Split', 'Ascent', 'Icebox']
+
 ## Retrieve Match Map names
 def GetMaps(url_match):
 
@@ -222,4 +233,4 @@ def MatchEconStats(match_url):
     for x in range(len(match_econ_maps)):
       map_econ_stats[x]['Map'] = match_econ_maps[x]
 
-  return [all_econ_stats, map_econ_stats]
+  return [all_econ_stats, map_econ_stats]'''

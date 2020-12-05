@@ -2,10 +2,9 @@ import pandas as pd
 import numpy as np 
 import re
 
-from match_utils import GetMaps
-from match_utils import GetPatchVer
-from match_utils import GetAgents
-from match_utils import Scores
+from match_utils import GetMaps, GetAgents, GetPatchVer, Scores
+
+MATCH_OVERVIEW_SUFIX = '?game=all&tab=overview'
 
 ## Match Overall Stats
 ## Concats Info from Match Info + Each Map (1-5 Maps)

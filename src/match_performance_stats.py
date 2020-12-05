@@ -2,11 +2,9 @@ import pandas as pd
 import numpy as np 
 import re
 
-from match_utils import GetMaps
-from match_utils import GetPatchVer
-from match_utils import GetAgents
-from match_utils import Scores
+from match_utils import GetMaps, GetAgents, GetPatchVer, Scores
 
+MATCH_PERFORMANCE_SUFIX = '?game=all&tab=performance'
 
 ## Player perfomance from match + each map
 def MatchPerfStats(match_url):
@@ -16,7 +14,7 @@ def MatchPerfStats(match_url):
   except:
     print("** DATA FRAME READ ERROR **")
   
-  maps, map_adv = GetMaps(match_url)
+  maps, _ = GetMaps(match_url)
   patch = GetPatchVer(match_url)
   n_maps = int((len(df) / 4)-1)
 
@@ -84,3 +82,29 @@ def MirrorMatchUp(df):
 
 ## Get Mult Kill and Clutch (1vX) data for each player
 def MultKCluth(df, map, patch):
+  
+  df.columns = ['Player', 'drop'] + list(df.columns[2:])
+  df.drop('drop',axis=1, inplace= True)
+
+  for idx in df.index:
+    if len(df.at[idx,'Player'].split()) < 2: 
+      df.drop(idx, axis=0, inplace=True)
+  df.reset_index(inplace=True, drop=True)
+
+  df['Team'] = [x.split()[-1] for x in df['Player']]
+  df['Player'] = [x.split()[0] for x in df['Player']]
+
+
+  stats_cols = ['2K',	'3K',	'4K','5K'	,'1v1',	'1v2',	'1v3',	'1v4',	'1v5']
+  for idx in 	df.index:
+    for col in stats_cols:
+      if pd.isna(df.at[idx, col]): df.at[idx, col] = 0
+      if map is not None: df.at[idx, col] = int( str(df.at[idx, col])[0] )
+
+  df['Opp_Team'] = None
+  df['Opp_Team'][0:5] = df['Team'][9]
+  df['Opp_Team'][5:10] = df['Team'][0]
+  if map is not None: df['Map'] = map 
+  df['Patch'] = patch
+
+  return df 

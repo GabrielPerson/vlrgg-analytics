@@ -1,3 +1,5 @@
+import pandas as pd
+
 ## Get and Clean Team Map Stats
 def TeamMapStats(team_url):
   

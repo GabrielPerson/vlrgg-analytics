@@ -1,3 +1,13 @@
+import pandas as pd 
+
+## Web Scraping
+import bs4
+from bs4 import BeautifulSoup as soup
+import urllib
+from urllib.request import urlopen as uReq
+
+AGENTS = ['omen', 'cypher', 'sova', 'jett', 'raze', 'breach', 'phoenix', 'reyna', 'killjoy' ,'sage' , 'brimstone', 'viper', 'Skye']
+
 ## Clean + Format numeric data on agent table
 def CleanAgentPick(df):
   
@@ -45,4 +55,4 @@ def EventAgentPick(event_url):
 
   df_agent_pick = CleanAgentPick(df_agent_pick)
 
-  return df_agent_pic
+  return df_agent_pick

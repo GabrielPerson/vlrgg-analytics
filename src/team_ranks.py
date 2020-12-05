@@ -1,3 +1,5 @@
+import pandas as pd
+
 ## Get Team Rankings by Region
 def TeamRankings(rank_url):
   
@@ -16,10 +18,7 @@ def TeamRankings(rank_url):
 ## Clean Team Rankings Data
 def CleanTeamRankings(df):
   
-  df['Wins'] = None
-  df['Loses'] = None
-  df['Time_last_played_days'] = None
-  df['Last_opp'] = None
+  df[['Wins', 'Loses', 'Time_last_played_days', 'Last_opp']] = None
 
   ## Split Record
   df['Wins'] = [x.split('–')[0] for x in df['Record']]
@@ -46,4 +45,4 @@ def CleanTeamRankings(df):
 
   df.drop(['Record', 'Last Played'], axis=1, inplace=True)
 
-  return d
+  return df
