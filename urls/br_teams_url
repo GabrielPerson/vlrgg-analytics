@@ -1,0 +1,196 @@
+NEW CAMPS
+  . AORUS LEAGUE 2
+  . BR MALLS
+  . FIRST STRIKE MAIN
+
+GL
+
+  gl_stats = VLR_URL + TEAM_STATS + SA_TEAMS['gl']
+  gl_brmalls = ['https://www.vlr.gg/6797/gamelanders-vs-imperial-esports-copa-brmalls-tournament-grand-final/',
+  'https://www.vlr.gg/6526/red-canids-vs-gamelanders-copa-brmalls-tournament-semifinals/',
+  'https://www.vlr.gg/6052/gamelanders-vs-falkol-esports-copa-brmalls-tournament-quarterfinals/']
+  gl_gc2 = ['https://www.vlr.gg/3214/gamelanders-vs-fusion-fraggers-gamers-club-ultimate-ii-main-event-semifinals/',
+        'https://www.vlr.gg/3144/b4-esports-vs-gamelanders-gamers-club-ultimate-ii-main-event-ubf-b/',
+        'https://www.vlr.gg/3050/fakezin-vs-gamelanders-gamers-club-ultimate-ii-main-event-ubsf-b/',
+        'https://www.vlr.gg/2976/gamelanders-vs-quem-treina-fica-ruim-gamers-club-ultimate-ii-closed-qualifier-round-of-16/']
+
+  gl_evo = ['https://www.vlr.gg/3142/vimdolol-vs-gamelanders-evolution-open-brazil-tournament-grand-final',
+        'https://www.vlr.gg/3140/gamelanders-vs-b4-esports-evolution-open-brazil-tournament-lower-final/',
+        'https://www.vlr.gg/3062/gamelanders-vs-vimdolol-evolution-open-brazil-tournament-round-7/',
+        'https://www.vlr.gg/3051/b4-esports-vs-gamelanders-evolution-open-brazil-tournament-round-6/',
+        'https://www.vlr.gg/2940/team-vikings-vs-gamelanders-evolution-open-brazil-tournament-round-5/',
+        'https://www.vlr.gg/2930/estral-esports-vs-gamelanders-evolution-open-brazil-tournament-round-4/']
+
+  gl_rak2 = ['https://www.vlr.gg/3510/gamelanders-vs-vimdolol-copa-rakin-2-tournament-lower-bracket-final/',
+  'https://www.vlr.gg/3508/gamelanders-vs-noorg2-0-copa-rakin-2-tournament-upper-bracket-final/',
+  'https://www.vlr.gg/3472/gamelanders-vs-estral-esports-copa-rakin-2-tournament-upper-bracket-semifinals/',
+  'https://www.vlr.gg/3466/gamelanders-vs-novidades-em-breve-copa-rakin-tournament-upper-bracket-quarterfinals/']
+
+  gl_fs = ['https://www.vlr.gg/4767/anuncie-aqui-vs-gamelanders-first-strike-brazil-open-qualifier-1-round-of-32/',
+  'https://www.vlr.gg/5261/gamelanders-vs-tagless-first-strike-brazil-closed-qualifier-ro32/',
+  'https://www.vlr.gg/5277/gamelanders-vs-galaxy-carrots-first-strike-brazil-closed-qualifier-ro16/']
+  gl_all = gl_gc2 + gl_evo + gl_rak2 + gl_fs + gl_brmalls
+
+RED
+
+  red_stats = VLR_URL + TEAM_STATS + SA_TEAMS['red']
+  red_gc2 = ['https://www.vlr.gg/3213/vimdolol-vs-noorg2-0-gamers-club-ultimate-ii-main-event-semifinals/',
+           'https://www.vlr.gg/3084/vimdolol-vs-fusion-fraggers-gamers-club-ultimate-ii-main-event-ubf-a/',
+           'https://www.vlr.gg/2980/team-one-vs-vimdolol-gamers-club-ultimate-ii-closed-qualifier-round-of-16/',
+           'https://www.vlr.gg/3047/question-mark-vs-vimdolol-gamers-club-ultimate-ii-main-event-ubsf-a/',
+           'https://www.vlr.gg/2963/vimdolol-vs-habbo-hotel-gamers-club-ultimate-ii-closed-qualifier-closed-qualifier/']
+
+  red_evo = ['https://www.vlr.gg/3142/vimdolol-vs-gamelanders-evolution-open-brazil-tournament-grand-final/',
+            'https://www.vlr.gg/3213/vimdolol-vs-noorg2-0-gamers-club-ultimate-ii-main-event-semifinals/',
+           'https://www.vlr.gg/3062/gamelanders-vs-vimdolol-evolution-open-brazil-tournament-round-7/',
+           'https://www.vlr.gg/3052/fakezin-vs-vimdolol-evolution-open-brazil-tournament-round-6/',
+           'https://www.vlr.gg/2942/team-one-vs-vimdolol-evolution-open-brazil-tournament-round-5/',
+           'https://www.vlr.gg/2938/toca-popeye-vs-vimdolol-evolution-open-brazil-tournament-round-4/']
+  
+  red_fs = ['https://www.vlr.gg/5275/red-canids-vs-golden-vulpes-first-strike-brazil-closed-qualifier-ro32/',
+  'www.vlr.gg/4778/team-one-vs-red-canids-first-strike-brazil-open-qualifier-1-round-of-16/',
+  'https://www.vlr.gg/4772/pain-gaming-vs-red-canids-first-strike-brazil-open-qualifier-1-round-of-32/',
+  'https://www.vlr.gg/5284/red-canids-vs-ingaming-first-strike-brazil-closed-qualifier-ro16/']
+  
+  red_rak2 = ['https://www.vlr.gg/3510/gamelanders-vs-vimdolol-copa-rakin-2-tournament-lower-bracket-final/',
+  'https://www.vlr.gg/3509/vimdolol-vs-team-one-copa-rakin-2-tournament-lower-bracket-round-3/',
+  'https://www.vlr.gg/3475/vimdolol-vs-black-dragons-copa-rakin-2-tournament-lower-bracket-round-2/',
+  'https://www.vlr.gg/3473/noorg2-0-vs-vimdolol-copa-rakin-2-tournament-upper-bracket-semifinals/',
+  'https://www.vlr.gg/3469/vimdolol-vs-detona-gaming-copa-rakin-2-tournament-upper-bracket-quarterfinals/']
+
+VF
+
+  vf_stats = VLR_URL + TEAM_STATS + SA_TEAMS['vf']
+  vf_gc2 = ['https://www.vlr.gg/3235/noorg2-0-vs-fusion-fraggers-gamers-club-ultimate-ii-main-event-gf/',
+            'https://www.vlr.gg/3214/gamelanders-vs-fusion-fraggers-gamers-club-ultimate-ii-main-event-semifinals/',
+            'https://www.vlr.gg/3084/vimdolol-vs-fusion-fraggers-gamers-club-ultimate-ii-main-event-ubf-a/',
+            'https://www.vlr.gg/3085/fusion-fraggers-vs-question-mark-gamers-club-ultimate-ii-main-event-lbf-a',
+            'https://www.vlr.gg/3048/no2b-e-sports-vs-fusion-fraggers-gamers-club-ultimate-ii-main-event-ubsf-a']
+  vf_spike_series = ['https://www.vlr.gg/4702/ingaming-vs-fusion-fraggers-esportsmaker-spike-series-grand-final',
+                     'https://www.vlr.gg/4701/fusion-fraggers-vs-falkol-esports-esportsmaker-spike-series-semifinals',
+                     'https://www.vlr.gg/4631/fusion-fraggers-vs-me-contrata-esportsmaker-spike-series-quarterfinals',
+                     'https://www.vlr.gg/4624/novidades-em-breve-vs-fusion-fraggers-esportsmaker-spike-series-tournament-round-of-16']
+  vf_evo = ['https://www.vlr.gg/3066/fakezin-vs-fusion-fraggers-evolution-open-brazil-tournament-losers-bracket-round-10/', 
+             'https://www.vlr.gg/2939/b4-esports-vs-fusion-fraggers-evolution-open-brazil-tournament-round-5/',
+             'https://www.vlr.gg/3063/fusion-fraggers-vs-havan-liberty-evolution-open-brazil-tournament-losers-bracket-round-8',
+             'https://www.vlr.gg/3058/fusion-fraggers-vs-question-mark-evolution-open-brazil-tournament-losers-bracket-round-8',
+             'https://www.vlr.gg/2928/fusion-fraggers-vs-anuncie-aqui-evolution-open-brazil-tournament-round-4']
+  vf_fs = ['https://www.vlr.gg/5281/fusion-fraggers-vs-intel-new-indians-first-strike-brazil-closed-qualifier-ro16',
+  'https://www.vlr.gg/5269/fusion-fraggers-vs-athletico-zombies-first-strike-brazil-closed-qualifier-ro32']
+
+B4
+
+  b4_stats = VLR_URL + TEAM_STATS + SA_TEAMS['b4']
+  b4_brmalls = ['https://www.vlr.gg/6051/red-canids-vs-b4-esports-copa-brmalls-tournament-quarterfinals/']
+  b4_gc2 = ['https://www.vlr.gg/3170/b4-esports-vs-noorg2-0-gamers-club-ultimate-ii-main-event-lbf-b/',
+            'https://www.vlr.gg/3144/b4-esports-vs-gamelanders-gamers-club-ultimate-ii-main-event-ubf-b/',
+            'https://www.vlr.gg/3049/b4-esports-vs-noorg2-0-gamers-club-ultimate-ii-main-event-ubsf-b/',
+            'https://www.vlr.gg/2981/b4-esports-vs-hazmat-gg-gamers-club-ultimate-ii-closed-qualifier-round-of-16',
+            'https://www.vlr.gg/2964/b4-esports-vs-comedores-de-cuscuz-gamers-club-ultimate-ii-closed-qualifier-closed-qualifier']
+  b4_evo = ['https://www.vlr.gg/3140/gamelanders-vs-b4-esports-evolution-open-brazil-tournament-lower-final/',
+            'https://www.vlr.gg/3068/fakezin-vs-b4-esports-evolution-open-brazil-tournament-losers-bracket-round-11/',
+            'https://www.vlr.gg/3065/b4-esports-vs-delirawow-evolution-open-brazil-tournament-losers-bracket-round-10/',
+            'https://www.vlr.gg/3051/b4-esports-vs-gamelanders-evolution-open-brazil-tournament-round-6/',
+            'https://www.vlr.gg/2939/b4-esports-vs-fusion-fraggers-evolution-open-brazil-tournament-round-5/',
+            'https://www.vlr.gg/2927/b4-esports-vs-detona-gaming-evolution-open-brazil-tournament-round-4']
+  b4_fs = ['https://www.vlr.gg/5278/b4-esports-vs-team-vikings-first-strike-brazil-closed-qualifier-ro16',
+  'https://www.vlr.gg/5267/b4-esports-vs-no2b-e-sports-first-strike-brazil-closed-qualifier-ro32',
+  'https://www.vlr.gg/4796/b4-esports-vs-mix-first-strike-brazil-open-qualifier-2-round-of-32',
+  'https://www.vlr.gg/4806/b4-esports-vs-pain-gaming-first-strike-brazil-open-qualifier-2-round-of-16']
+
+PAIN
+
+  pain_stats = VLR_URL + TEAM_STATS + SA_TEAMS['pain']
+  pain_brmalls = ['https://www.vlr.gg/6527/imperial-esports-vs-pain-gaming-copa-brmalls-tournament-semifinals/',
+  'https://www.vlr.gg/6054/pain-gaming-vs-intz-angels-copa-brmalls-tournament-quarterfinals/']
+  pain_gc2 = ['https://www.vlr.gg/3235/noorg2-0-vs-fusion-fraggers-gamers-club-ultimate-ii-main-event-gf/',
+                   'https://www.vlr.gg/3213/vimdolol-vs-noorg2-0-gamers-club-ultimate-ii-main-event-semifinals/',
+                   'https://www.vlr.gg/3170/b4-esports-vs-noorg2-0-gamers-club-ultimate-ii-main-event-lbf-b/',
+                   'https://www.vlr.gg/3143/fakezin-vs-noorg2-0-gamers-club-ultimate-ii-main-event-lr1-b/',
+                   'https://www.vlr.gg/2978/falkol-esports-vs-noorg2-0-gamers-club-ultimate-ii-closed-qualifier-round-of-16/']
+  pain_fs = ['https://www.vlr.gg/5283/pain-gaming-vs-black-dragons-first-strike-brazil-closed-qualifier-ro16/',
+  'https://www.vlr.gg/5273/pain-gaming-vs-dogz-first-strike-brazil-closed-qualifier-ro32/',
+  'https://www.vlr.gg/5174/pain-gaming-vs-1tap-first-strike-brazil-qualifier-3-round-of-16/',
+  'https://www.vlr.gg/5025/furnace-e-sports-vs-pain-gaming-first-strike-brazil-open-qualifier-3-round-of-32/',
+  'https://www.vlr.gg/4797/1tap-vs-pain-gaming-first-strike-brazil-open-qualifier-2-round-of-32/',
+  'https://www.vlr.gg/4806/b4-esports-vs-pain-gaming-first-strike-brazil-open-qualifier-2-round-of-16/',
+  'https://www.vlr.gg/4772/pain-gaming-vs-red-canids-first-strike-brazil-open-qualifier-1-round-of-32/']
+  pain_spike_series = ['https://www.vlr.gg/4629/ingaming-vs-pain-gaming-esportsmaker-spike-series-quarterfinals/',
+  'https://www.vlr.gg/4621/os-kara-velho-vs-pain-gaming-esportsmaker-spike-series-tournament-round-of-16/']
+  pain_rak2 = ['https://www.vlr.gg/3511/noorg2-0-vs-gamelanders-copa-rakin-2-tournament-grand-final/',
+  'https://www.vlr.gg/3508/gamelanders-vs-noorg2-0-copa-rakin-2-tournament-upper-bracket-final/',
+  'https://www.vlr.gg/3473/noorg2-0-vs-vimdolol-copa-rakin-2-tournament-upper-bracket-semifinals/',
+  'https://www.vlr.gg/3468/noorg2-0-vs-team-one-copa-rakin-tournament-upper-bracket-quarterfinals/']
+
+TEAM ONE
+
+  one_stats = VLR_URL + TEAM_STATS + SA_TEAMS['one']
+  one_fs = ['https://www.vlr.gg/5282/team-one-vs-era-eternity-first-strike-brazil-closed-qualifier-ro16',
+  'https://www.vlr.gg/5265/team-one-vs-shadow-team-first-strike-brazil-closed-qualifier-ro32',
+  'https://www.vlr.gg/5170/team-one-vs-sintonia-team-first-strike-brazil-qualifier-3-round-of-16',
+  'https://www.vlr.gg/5017/cooldown-e-sports-vs-team-one-first-strike-brazil-open-qualifier-3-round-of-32',
+  'https://www.vlr.gg/4778/team-one-vs-red-canids-first-strike-brazil-qualifier-1-round-of-16',
+  'https://www.vlr.gg/4771/blackshot-vs-team-one-first-strike-brazil-open-qualifier-1-round-of-32']
+  one_rak2 = ['https://www.vlr.gg/3509/vimdolol-vs-team-one-copa-rakin-2-tournament-lower-bracket-round-3',
+  'https://www.vlr.gg/3476/estral-esports-vs-team-one-copa-rakin-2-tournament-lower-bracket-round-2',
+  'https://www.vlr.gg/3474/team-one-vs-detona-gaming-copa-rakin-2-tournament-lower-bracket-round-1',
+  'https://www.vlr.gg/3468/noorg2-0-vs-team-one-copa-rakin-tournament-upper-bracket-quarterfinals']
+  one_evo = ['https://www.vlr.gg/3064/delirawow-vs-team-one-evolution-open-brazil-tournament-losers-bracket-round-8',
+  'https://www.vlr.gg/3061/team-one-vs-estral-esports-evolution-open-brazil-tournament-losers-bracket-round-8',
+  'https://www.vlr.gg/2933/team-one-vs-highpower-evolution-open-brazil-tournament-round-4',
+  'https://www.vlr.gg/2942/team-one-vs-vimdolol-evolution-open-brazil-tournament-round-5']
+  one_gc2 = ['https://www.vlr.gg/2980/team-one-vs-vimdolol-gamers-club-ultimate-ii-closed-qualifier-round-of-16',
+  'https://www.vlr.gg/2962/team-one-vs-shadow-team-gamers-club-ultimate-ii-closed-qualifier-closed-qualifier']
+
+IMPERIAL
+
+  imp_stats = VLR_URL + TEAM_STATS + SA_TEAMS['imp']
+  imp_brmalls = ['https://www.vlr.gg/6527/imperial-esports-vs-pain-gaming-copa-brmalls-tournament-semifinals/',
+  'https://www.vlr.gg/6527/imperial-esports-vs-pain-gaming-copa-brmalls-tournament-semifinals/',
+  'https://www.vlr.gg/6053/imperial-esports-vs-team-one-copa-brmalls-tournament-quarterfinals/']
+  imp_fs = ['https://www.vlr.gg/5284/red-canids-vs-ingaming-first-strike-brazil-closed-qualifier-ro16/',
+  'https://www.vlr.gg/5276/ingaming-vs-novidades-em-breve-first-strike-brazil-closed-qualifier-ro32/',
+  'https://www.vlr.gg/5173/real-esports-vs-ingaming-first-strike-brazil-qualifier-3-round-of-16/',
+  'https://www.vlr.gg/5024/ingaming-vs-fazteuhype-first-strike-brazil-open-qualifier-3-round-of-32/']
+  imp_valorao = ['https://www.vlr.gg/4976/vivo-keyd-vs-ingaming-valor-o-cup-invitational-playoffs-grand-final/',
+  'https://www.vlr.gg/4943/black-dragons-vs-ingaming-valor-o-cup-invitational-playoffs-semifinals/',
+  'https://www.vlr.gg/4906/team-vikings-vs-ingaming-valor-o-cup-invitational-playoffs-quarterfinals/']
+  imp_spike_series = ['https://www.vlr.gg/4702/ingaming-vs-fusion-fraggers-esportsmaker-spike-series-grand-final/',
+  'https://www.vlr.gg/4700/ingaming-vs-no-contract-esportsmaker-spike-series-semifinals/',
+  'https://www.vlr.gg/4629/ingaming-vs-pain-gaming-esportsmaker-spike-series-quarterfinals/',
+  'https://www.vlr.gg/4620/team-vikings-vs-patrocinados-esportsmaker-spike-series-tournament-round-of-16/']
+
+HAVAN LIBERTY
+  havan_stats = VLR_URL + TEAM_STATS + SA_TEAMS['havan']
+  havan_fs = ['https://www.vlr.gg/5279/delirawow-vs-havan-liberty-first-strike-brazil-closed-qualifier-ro16/',
+  'https://www.vlr.gg/5264/havan-liberty-vs-dks-esports-first-strike-brazil-closed-qualifier-ro32/']
+  havan_valorao = ['https://www.vlr.gg/4944/vivo-keyd-vs-havan-liberty-valor-o-cup-invitational-playoffs-semifinals/',
+  'https://www.vlr.gg/4908/havan-liberty-vs-tiobar-o-valor-o-cup-invitational-playoffs-quarterfinals/',
+  'https://www.vlr.gg/4902/era-eternity-vs-havan-liberty-valor-o-cup-invitational-group-stage-group-d/',
+  'https://www.vlr.gg/4901/havan-liberty-vs-furnace-e-sports-valor-o-cup-invitational-group-stage-group-d/',
+  'https://www.vlr.gg/4898/a-force-vs-havan-liberty-valor-o-cup-invitational-group-stage-group-d/',
+  'https://www.vlr.gg/4437/havan-liberty-vs-era-eternity-valor-o-cup-invitational-group-stage-group-d/',
+  'https://www.vlr.gg/4436/furnace-e-sports-vs-havan-liberty-valor-o-cup-invitational-group-stage-group-d/',
+  'https://www.vlr.gg/4433/havan-liberty-vs-a-force-valor-o-cup-invitational-group-stage-group-d/']
+  havan_evo = ['https://www.vlr.gg/3063/fusion-fraggers-vs-havan-liberty-evolution-open-brazil-tournament-losers-bracket-round-8/',
+  'https://www.vlr.gg/3059/team-vikings-vs-havan-liberty-evolution-open-brazil-tournament-losers-bracket-round-8/',
+  'https://www.vlr.gg/3055/havan-liberty-vs-comedores-de-cuscuz-evolution-open-brazil-tournament-losers-bracket-round-7/']
+  
+FALKOL
+  fkl_stats = VLR_URL + TEAM_STATS + SA_TEAMS['fkl']
+  fkl_fs = ['https://www.vlr.gg/5280/nmdm-vs-falkol-esports-first-strike-brazil-closed-qualifier-ro16',
+  'https://www.vlr.gg/5272/falkol-esports-vs-zoologicamente-first-strike-brazil-closed-qualifier-ro32',
+  'https://www.vlr.gg/4805/vivo-keyd-vs-falkol-esports-first-strike-brazil-open-qualifier-2-round-of-16',
+  'https://www.vlr.gg/4795/spike-rush-vs-falkol-esports-first-strike-brazil-open-qualifier-2-round-of-32']
+  fkl_spike_series = ['https://www.vlr.gg/4701/fusion-fraggers-vs-falkol-esports-esportsmaker-spike-series-semifinals',
+  'https://www.vlr.gg/4632/galaxy-carrots-vs-falkol-esports-esportsmaker-spike-series-quarterfinals',
+  'https://www.vlr.gg/4626/delirawow-vs-falkol-esports-esportsmaker-spike-series-tournament-round-of-16']
+
+
+
+
+
+
+
+
+
