@@ -1,6 +1,11 @@
+#!/usr/bin/python3
 import pandas as pd
 import numpy as np 
 import re
+import warnings
+
+from pandas.core.common import SettingWithCopyWarning
+warnings.simplefilter(action="ignore", category=SettingWithCopyWarning)
 
 from match_utils import GetMaps, GetAgents, GetPatchVer, Scores
 

@@ -1,4 +1,6 @@
+#!/usr/bin/python3
 import pandas as pd
+from pandas.core.common import SettingWithCopyWarning
 
 ## Get and Clean Team Map Stats
 def TeamMapStats(team_url):

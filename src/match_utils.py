@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 ## Web Scraping
 import bs4
 from bs4 import BeautifulSoup as soup
@@ -6,6 +8,7 @@ from urllib.request import urlopen as uReq
 
 import pandas as pd 
 import re
+from pandas.core.common import SettingWithCopyWarning
 
 MAPS = ['Haven', 'Bind', 'Split', 'Ascent', 'Icebox']
 

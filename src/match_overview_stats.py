@@ -1,14 +1,22 @@
+#!/usr/bin/python3
 import pandas as pd
 import numpy as np 
 import re
+import warnings
+
+from pandas.core.common import SettingWithCopyWarning
+warnings.simplefilter(action="ignore", category=SettingWithCopyWarning)
 
 from match_utils import GetMaps, GetAgents, GetPatchVer, Scores
 
 MATCH_OVERVIEW_SUFIX = '?game=all&tab=overview'
 
+
 ## Match Overall Stats
 ## Concats Info from Match Info + Each Map (1-5 Maps)
 def MatchOverviewStats(match_url):
+
+  df_match = None
 
   try:
     df_match = pd.read_html(match_url + MATCH_OVERVIEW_SUFIX)

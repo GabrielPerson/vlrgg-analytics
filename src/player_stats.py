@@ -1,4 +1,7 @@
+#!/usr/bin/python3
+
 import pandas as pd
+from pandas.core.common import SettingWithCopyWarning
 
 ## Retrieve players overall stats
 ## Read table from url

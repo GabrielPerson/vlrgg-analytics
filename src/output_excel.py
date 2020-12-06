@@ -1,4 +1,4 @@
-
+#!/usr/bin/python3
 ## Exporting
 import pandas as pd 
 
@@ -6,6 +6,7 @@ from match_economy_stats import MatchEconStats
 from match_overview_stats import MatchOverviewStats
 from match_performance_stats import MatchPerfStats
 from team_stats import TeamMapStats
+from pandas.core.common import SettingWithCopyWarning
 
 ## Write dataframes to Excel File
 def DataFramesToExcel(df_list, file_name, sheet_names, show_index=False):

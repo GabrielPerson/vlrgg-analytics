@@ -5,6 +5,7 @@ import bs4
 from bs4 import BeautifulSoup as soup
 import urllib
 from urllib.request import urlopen as uReq
+from pandas.core.common import SettingWithCopyWarning
 
 AGENTS = ['omen', 'cypher', 'sova', 'jett', 'raze', 'breach', 'phoenix', 'reyna', 'killjoy' ,'sage' , 'brimstone', 'viper', 'Skye']
 
