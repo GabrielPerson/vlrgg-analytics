@@ -25,10 +25,9 @@ def EventAgentPick(event_url):
   try:
     df_agent_pick = pd.read_html(event_url)[0]
   except:
-    print("** DATA FRAME READ ERROR **")
+    print("** DATA FRAME READ ERROR - " + str(event_url) +  " **")
 
-  agents_src = []
-  agent_list = []
+  agents_src, agent_list = []
 
   # Agent name scraping (ordered by pick rate)
   try:
@@ -44,7 +43,7 @@ def EventAgentPick(event_url):
     agents_table = page_soup.find("table",{"class": "wf-table mod-pr-global"})
     agents_src = agents_table.findAll("img")
   except:
-    print("** NO INFO **")
+    print("** NO INFO -- AGENTS **")
     return None
 
   for src in agents_src:

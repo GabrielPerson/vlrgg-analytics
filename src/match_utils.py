@@ -28,7 +28,7 @@ def GetMaps(url_match):
     div_maps = page_soup.find("div",{"class":"vm-stats-gamesnav-container"})
     map_src = div_maps.findAll("div", {"class":"vm-stats-gamesnav-item"})
   except:
-    print("** NO INFO **")
+    print("** NO INFO -- MAPS **")
     return None
 
   map_list = []
@@ -72,7 +72,7 @@ def GetAgents(url_match):
     div_stats = page_soup.find("div",{"class":"vm-stats-container"})
     mod_agents = div_stats.findAll("td",{"class":"mod-agents"})
   except:
-    print("** NO INFO **")
+    print("** NO INFO -- AGENTS **")
     return None
   
   #if mod_agents is not None:
@@ -101,7 +101,7 @@ def Scores(url_match):
     data_container = page_soup.find("div",{"class":"vm-stats-container"})
     all_scores = data_container.findAll("div",{"class":"score"})
   except:
-    print("** NO INFO **")
+    print("** NO INFO -- SCORES **")
     return None
 
   for tag in all_scores: scores.append(int(tag.text))
@@ -126,7 +126,7 @@ def GetPatchVer(url_match):
     header_date = page_soup.find("div",{"class":"match-header-date"})
     patch = header_date.find("div", {"class":"wf-tooltip"}).text
   except:
-    print("** NO INFO **")
+    print("** NO INFO -- PATCH VERSION **")
     return None
 
   match = regex.search(patch)

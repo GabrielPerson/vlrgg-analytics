@@ -8,7 +8,7 @@ def TeamMapStats(team_url):
   try:
     df = pd.read_html(team_url)[0]
   except:
-    print("** DATA FRAME READ ERROR **")
+    print("** DATA FRAME READ ERROR -- " + str(team_url) +  " **")
     return None
 
   df.columns = ['Map', 'Expand', 'MAP_WIN_RATE', 'MAP_W', 'MAP_L', 'ATK_START', 'DEF_START', 

@@ -2,10 +2,7 @@
 import pandas as pd
 import numpy as np 
 import re
-import warnings
 
-from pandas.core.common import SettingWithCopyWarning
-warnings.simplefilter(action="ignore", category=SettingWithCopyWarning)
 
 from match_utils import GetMaps, GetAgents, GetPatchVer, Scores
 
@@ -54,7 +51,7 @@ def MatchEconStats(match_url):
   try:
     df_econ = pd.read_html(match_url + MATCH_ECON_SUFIX)
   except:
-    print("** DATA FRAME READ ERROR **")
+    print("** DATA FRAME READ ERROR -- " + str(match_url) + " **")
   
   patch = GetPatchVer(match_url)
 

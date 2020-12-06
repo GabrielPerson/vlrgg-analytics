@@ -8,7 +8,7 @@ def TeamRankings(rank_url):
   try:
     df = pd.read_html(rank_url)[0]
   except:
-    print("** DATA FRAME READ ERROR **")
+    print("** DATA FRAME READ ERROR -- " + str(rank_url) +   " **")
     return None
 
   df.columns = ['Rank', 'Team', 'Rating', 'Last Played', 'Streak', 'Record', 'Winnings']
@@ -31,7 +31,6 @@ def CleanTeamRankings(df):
 
   ## Last Played
   last_play = [x.split()[0] for x in df['Last Played']]
-
   df['Time_last_played_days'] = [int(''.join(filter(str.isdigit, x))) / 24 
                                     if x[-1] == 'h' 
                                     else int(''.join(filter(str.isdigit, x)))

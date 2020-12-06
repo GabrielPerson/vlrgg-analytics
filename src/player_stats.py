@@ -12,7 +12,7 @@ def PlayerStats(player_stats_url):
   try:
     df = pd.read_html(player_stats_url)[0]
   except:
-    print("** DATA FRAME READ ERROR **")
+    print("** DATA FRAME READ ERROR" + str(player_stats_url) +  "**")
 
   df[['Team', 'CL_W', 'CL_T']] = None
 

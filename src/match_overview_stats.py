@@ -2,10 +2,6 @@
 import pandas as pd
 import numpy as np 
 import re
-import warnings
-
-from pandas.core.common import SettingWithCopyWarning
-warnings.simplefilter(action="ignore", category=SettingWithCopyWarning)
 
 from match_utils import GetMaps, GetAgents, GetPatchVer, Scores
 
@@ -21,10 +17,12 @@ def MatchOverviewStats(match_url):
   try:
     df_match = pd.read_html(match_url + MATCH_OVERVIEW_SUFIX)
   except:
-    print("** DATA FRAME READ ERROR **")
+    print("** DATA FRAME READ ERROR -- " + str(match_url) + " **")
     return None
 
-  match_cols = ['Player', 'Agents', 'ACS',	'K',	'D',	'A',	'KD_DIFF',	'ADR',	'HS%',	'FK',	'FD',	'FK_FD_DIFF']
+  match_cols = ['Player', 'Agents', 'ACS',	'K',	'D',	'A',	
+                'KD_DIFF',	'ADR',	'HS%',	'FK',	'FD',	'FK_FD_DIFF']
+  
   match_maps, map_adv = GetMaps(match_url)
   agents = GetAgents(match_url)
   rounds_won = Scores(match_url)
@@ -93,7 +91,6 @@ def ConcatMaps(df_match, match_maps, map_adv, agents, round_won, patch):
 
   n_maps = int((len(df_match) - 2) / 2)
   
-  
   ## 1 MAP
   if map_adv == 0:
     df_map1 = pd.concat(df_match[:2], ignore_index=True)
@@ -106,41 +103,26 @@ def ConcatMaps(df_match, match_maps, map_adv, agents, round_won, patch):
 
   ## 2 MAPS
   if n_maps > 1:
-
     t1_rounds_w = round_won[2]
     t1_rounds_l = round_won[3]
     map = match_maps[1]
     df_map2 = pd.concat(df_match[4:6], ignore_index=True)
     df_map2 = AddInfoMap(df_map2, map, agents[20:30], 
                           t1_rounds_w, t1_rounds_l, patch)
-    '''if map_adv == 0:
-      df_map2 = AddInfoMap(df_map2, map, agents[20:30], 
-                          t1_rounds_w, t1_rounds_l, patch)
-    else:
-      df_map2 = AddInfoMap(df_map2, map, agents[30:40], 
-                          t1_rounds_w, t1_rounds_l, patch)'''
   else: df_map2 = None
   
   ## 3 MAPS
   if n_maps > 2:
-    
     t1_rounds_w = round_won[4]
     t1_rounds_l = round_won[5]
     map = match_maps[2]
     df_map3 = pd.concat(df_match[6:8], ignore_index=True)
     df_map3 = AddInfoMap(df_map3, map, agents[30:40], 
                          t1_rounds_w, t1_rounds_l, patch)
-    '''if map_adv == 0:
-    df_map3 = AddInfoMap(df_map3, map, agents[30:40], 
-                         t1_rounds_w, t1_rounds_l, patch)
-    else:
-      df_map3 = AddInfoMap(df_map3, map, agents[40:50], 
-                         t1_rounds_w, t1_rounds_l, patch)'''
   else: df_map3 = None
 
   ## 4 MAPS
   if n_maps > 3:
-     
      t1_rounds_w = round_won[6]
      t1_rounds_l = round_won[7]
      map = match_maps[3]
@@ -151,7 +133,6 @@ def ConcatMaps(df_match, match_maps, map_adv, agents, round_won, patch):
 
   ## 5 MAPS
   if n_maps > 4:
-     
      t1_rounds_w = round_won[8]
      t1_rounds_l = round_won[9]
      map = match_maps[4]
