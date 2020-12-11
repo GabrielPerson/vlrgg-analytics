@@ -92,7 +92,6 @@ def Scores(url_match):
     client = uReq(url_match)
     page_html = client.read()
   except urllib.error.URLError as err:
-    return None
     client.close()
   client.close()
 
