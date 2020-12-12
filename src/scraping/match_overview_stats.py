@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np 
 import re
 
-from match_utils import GetMaps, GetAgents, GetPatchVer, Scores
+from scraping.match_utils import GetMaps, GetAgents, GetPatchVer, Scores
 
 MATCH_OVERVIEW_SUFIX = '?game=all&tab=overview'
 

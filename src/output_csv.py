@@ -2,10 +2,10 @@
 
 import pandas as pd 
 
-from match_economy_stats import MatchEconStats
-from match_overview_stats import MatchOverviewStats
-from match_performance_stats import MatchPerfStats
-from team_stats import TeamMapStats
+from scraping.match_economy_stats import MatchEconStats
+from scraping.match_overview_stats import MatchOverviewStats
+from scraping.match_performance_stats import MatchPerfStats
+from scraping.team_stats import TeamMapStats
 
 
 '''def PlayerStatsCSV(URL, out_file):
