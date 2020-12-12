@@ -18,7 +18,6 @@ def TeamMapDataCSV(URL, out_filename):
     out_filename = out_filename + '.csv'
     data.to_csv(out_filename, index=False)
 
-
 def EconomyDataCSV(URLS, out_filename):
 
     data = [MatchEconStats(url) for url in URLS]
@@ -31,7 +30,6 @@ def EconomyDataCSV(URLS, out_filename):
     matches.to_csv(out_filename_match, index=False)
     maps.to_csv(out_filename_maps, index=False)
     
-
 def OverviewDataCSV(URLS, out_filename):
 
     data = [MatchOverviewStats(url) for url in URLS]
