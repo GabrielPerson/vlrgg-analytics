@@ -46,7 +46,7 @@ def PlayerStats(player_stats_url):
   df.drop(['Agents', 'CL'], axis=1, inplace=True)
 
   ## Fix Mixwell team - ONLY MIXWELL BECAUSE HE IS CUTE
-  mixwell_index = df[df['Player'] == 'Mixwell'].index[0]
-  df.at[mixwell_index, 'Team'] = 'G2'
+  #mixwell_index = df[df['Player'] == 'Mixwell'].index[0]
+  #df.at[mixwell_index, 'Team'] = 'G2'
 
   return df

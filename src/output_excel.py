@@ -2,11 +2,12 @@
 ## Exporting
 import pandas as pd 
 
-from match_economy_stats import MatchEconStats
-from match_overview_stats import MatchOverviewStats
-from match_performance_stats import MatchPerfStats
-from team_stats import TeamMapStats
-from pandas.core.common import SettingWithCopyWarning
+from scraping.player_stats import PlayerStats
+from scraping.match_economy_stats import MatchEconStats
+from scraping.match_overview_stats import MatchOverviewStats
+from scraping.match_performance_stats import MatchPerfStats
+from scraping.team_stats import TeamMapStats
+from scraping.pandas.core.common import SettingWithCopyWarning
 
 ## Write dataframes to Excel File
 def DataFramesToExcel(df_list, file_name, sheet_names, show_index=False):
@@ -19,6 +20,15 @@ def DataFramesToExcel(df_list, file_name, sheet_names, show_index=False):
 def TeamMapDataExcel(URLS, out_file, sheets):
 
   data = [TeamMapStats(url) for url in URLS]
+  DataFramesToExcel(data, out_file, sheets)
+
+def PlayerDataExcel(ULRS, out_file, sheets):
+  
+  data = [PlayerStats(url) for url in URLS]
+  out =  [pd.concat([x for x in data], ignore_index=True)] #list of one df
+
+  out_file = out_file + '.xlsx'
+
   DataFramesToExcel(data, out_file, sheets)
 
 def PerformanceDataExcel(URLS, out_file, sheets):

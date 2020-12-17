@@ -2,6 +2,7 @@
 
 import pandas as pd 
 
+from scraping.player_stats import PlayerStats
 from scraping.match_economy_stats import MatchEconStats
 from scraping.match_overview_stats import MatchOverviewStats
 from scraping.match_performance_stats import MatchPerfStats
@@ -17,6 +18,15 @@ def TeamMapDataCSV(URL, out_filename):
     data = TeamMapStats(URL)
     out_filename = out_filename + '.csv'
     data.to_csv(out_filename, index=False)
+
+def PlayerDataCSV(URLS, out_filename):
+
+    data = [PlayerStats(url) for url in URLS]
+    out = pd.concat([x for x in data], ignore_index=True) #df
+
+    out_filename = out_filename + '.csv'
+
+    out.to_csv(out_filename, index=False)
 
 def EconomyDataCSV(URLS, out_filename):
 
