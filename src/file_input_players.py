@@ -19,19 +19,14 @@ with open(input_file) as f:
 
 urls = [line.strip() for line in content]
 
-#url = ['https://www.vlr.gg/6797/gamelanders-vs-imperial-esports-copa-brmalls-tournament-grand-final/']
+#urls = ['https://www.vlr.gg/stats/?event_id=all&region=all&country=br&min_rounds=100&agent=viper&map_id=all&timespan=60d/']
 
 
 if output_type.lower() == 'csv':
-    output_file = '../data/csv/' + sys.argv[2]
+    output_file = '../data/csv/' + output_file
     PlayerDataCSV(urls, output_file)
-elif output_file.lower() == 'excel':
-    output_file =  = '../data/excel/' + sys.argv[2]
+elif output_type.lower() == 'xls':
+    output_file = '../data/excel/' + output_file
     PlayerDataExcel(urls, output_file, ['PLAYER DATA'])
 else:
-    print("** TIPO ERRADO DE ARQUIVO -- USE 'CSV' OU 'EXCEL' **")
-    
-
-'''OverviewDataCSV(url, output_file)
-PerformanceDataCSV(url, output_file)
-EconomyDataCSV(url, output_file)'''
+    print("** TIPO ERRADO DE ARQUIVO -- USE 'CSV' OU 'XLS' **")
