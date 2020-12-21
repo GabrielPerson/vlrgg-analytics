@@ -9,26 +9,22 @@ from scraping.match_performance_stats import MatchPerfStats
 from scraping.team_stats import TeamMapStats
 
 
-'''def PlayerStatsCSV(URL, out_file):
-    
-    data = [PlayerStats(URL)]'''
+def TeamMapDataCSV(URLS: list, out_filename: str):
 
-def TeamMapDataCSV(URL, out_filename):
-
-    data = TeamMapStats(URL)
-    out_filename = out_filename + '.csv'
-    data.to_csv(out_filename, index=False)
-
-def PlayerDataCSV(URLS, out_filename):
-
-    data = [PlayerStats(url) for url in URLS]
-    out = pd.concat([x for x in data], ignore_index=True) #df
+    data = [TeamMapStats(url) for url in URLS]
+    out = pd.concat(data, ignore_index=True) #df
 
     out_filename = out_filename + '.csv'
-
     out.to_csv(out_filename, index=False)
 
-def EconomyDataCSV(URLS, out_filename):
+def PlayerDataCSV(URLS: list, out_filename: str):
+
+    data = [PlayerStats(url) for url in URLS]
+    out = pd.concat(data, ignore_index=True) #df
+
+    out.to_csv(out_filename + '.csv', index=False)
+
+def EconomyDataCSV(URLS: list, out_filename: str):
 
     data = [MatchEconStats(url) for url in URLS]
     matches =  pd.concat([x[0] for x in data], ignore_index=True) #df
@@ -40,7 +36,7 @@ def EconomyDataCSV(URLS, out_filename):
     matches.to_csv(out_filename_match, index=False)
     maps.to_csv(out_filename_maps, index=False)
     
-def OverviewDataCSV(URLS, out_filename):
+def OverviewDataCSV(URLS: list, out_filename: str):
 
     data = [MatchOverviewStats(url) for url in URLS]
     matches =  pd.concat([x[0] for x in data], ignore_index=True) #df
@@ -52,7 +48,7 @@ def OverviewDataCSV(URLS, out_filename):
     matches.to_csv(out_filename_match, index=False)
     maps.to_csv(out_filename_maps, index=False)
 
-def PerformanceDataCSV(URLS, out_filename):
+def PerformanceDataCSV(URLS: list, out_filename: str):
 
     data = [MatchPerfStats(url) for url in URLS]
     matches =  pd.concat([x[1] for x in data], ignore_index=True) #df
