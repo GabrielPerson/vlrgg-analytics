@@ -20,7 +20,11 @@ def DataFramesToExcel(df_list: list, file_name: str, sheet_names: list, show_ind
 def TeamMapDataExcel(URLS: list, out_filename: str, sheets: list):
 
   data = [TeamMapStats(url) for url in URLS]
-  DataFramesToExcel(data, out_filename, sheets)
+  out = [pd.concat(data, ignore_index=True)] #list of one df
+
+  out_filename = out_filename + '.xlsx'
+
+  DataFramesToExcel(out, out_filename, sheets)
 
 def PlayerDataExcel(URLS: list, out_filename: str, sheets: list):
   
