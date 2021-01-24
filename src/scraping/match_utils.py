@@ -130,4 +130,5 @@ def GetPatchVer(url_match):
 
   match = regex.search(patch)
 
-  return float(match.group())
+  if match is not None: return float(match.group())
+  else: return None

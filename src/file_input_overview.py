@@ -1,6 +1,8 @@
 #!/usr/bin/python3
 import sys
 import warnings
+import time
+
 
 import pandas
 from output_excel import OverviewDataExcel
@@ -9,6 +11,8 @@ from output_csv import OverviewDataCSV
 from pandas.core.common import SettingWithCopyWarning
 warnings.simplefilter(action="ignore", category=SettingWithCopyWarning)
 
+## exec format: python3 file_input_overview.py ../urls/gamelanders.txt gamelanders_overview csv
+start = time.time()
 
 input_file = sys.argv[1]
 output_file = sys.argv[2]
@@ -19,7 +23,7 @@ with open(input_file) as f:
 
 urls = [line.strip() for line in content]
 
-#urls = ['https://www.vlr.gg/stats/?event_id=all&region=all&country=br&min_rounds=100&agent=viper&map_id=all&timespan=60d/']
+#urls = ['https://www.vlr.gg/6797/gamelanders-vs-imperial-esports-copa-brmalls-tournament-grand-final/']
 
 
 if output_type.lower() == 'csv':
@@ -30,3 +34,5 @@ elif output_type.lower() == 'xls':
     OverviewDataExcel(urls, output_file, ['MATCHES', 'MAPS'])
 else:
     print("** TIPO ERRADO DE ARQUIVO -- USE 'CSV' OU 'XLS' **")
+
+print('It took {0:0.1f} seconds'.format(time.time() - start))

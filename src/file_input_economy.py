@@ -5,10 +5,12 @@ import warnings
 import pandas
 from output_excel import EconomyDataExcel
 from output_csv import EconomyDataCSV 
+import time
 
 from pandas.core.common import SettingWithCopyWarning
 warnings.simplefilter(action="ignore", category=SettingWithCopyWarning)
 
+start = time.time()
 
 input_file = sys.argv[1]
 output_file = sys.argv[2]
@@ -30,3 +32,6 @@ elif output_type.lower() == 'xls':
     EconomyDataExcel(urls, output_file, ['MATCHES', 'MAPS'])
 else:
     print("** TIPO ERRADO DE ARQUIVO -- USE 'CSV' OU 'XLS' **")
+
+
+print('It took {0:0.1f} seconds'.format(time.time() - start))

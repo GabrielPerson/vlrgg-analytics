@@ -1,0 +1,39 @@
+- analista pain
+- analista de dados & analista tecnico
+- contextualizar e propor soluções baseado em performance e acoes
+- salario > 1000 reais + custos pela pain
+- possibilidade de morar na GH
+- sobre o teste
+    - analise focada na PERFORMANCE DA 0 pain
+    - comportamentos
+    - tendencias
+    - execucoes
+    - posicionamento
+    - comunicação
+    - hipoteses
+        . dados
+            . quais estatisticas do time impactam na nossa vitoria
+            . ganhar mais clutches nos ajuda a vencer mais
+            . performance economica impacta na nossa vitoria
+        . VOD
+            . TR
+                . o tempo de execucao influencia na vitoria do round 
+                . executar  em rounds sem vantagem numerica influencia na vitoria 
+                . executar  em rounds com vantagem numerica influencia na vitoria 
+                . executar  em rounds com desvatagem numerica influencia na derrota 
+                . executar bombs com/sem sentinela influencia na vitoria
+                . o a gente que planta a bomba influencia na vitoria do round
+                . o tipo de agente inimigo abatido primeiro influencia na vitoria do round
+                . o tipo de agente aliado abatido primeiro influencia na vitoria do round
+            . CT
+                . o tempo de execucao do inimigo influencia na vitoria do round
+                . tomar execucao sem vantagem numerica influencia na vitoria
+                . tomar execucao com vantagem numerica influencia na vitoria
+                . tomar execucao com vantagem numerica influencia na derrota 
+                . a presenca do nosso sentila no bomb executado influencia na vitoria do round
+    - modus operandi:
+        - puxar dados do vlrgg com relacao a partida
+        - assistir partida 1x 
+        - re-assistir TR + notas
+        - analisar TR (planilha)
+        - re-assitir CT + notas

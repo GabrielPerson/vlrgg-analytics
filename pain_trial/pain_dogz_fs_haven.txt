@@ -1,0 +1,120 @@
+---- TR
+--R1
+spot sova + exec C  
+fk fenix x reyna push dd - 85 
+plant omen
+retake 3x3
+W
+--R2
+fk jett x sova hold lobby C - 80
+spot sova + exec A (cypher) 5x3 40  
+plant cypher
+W
+--R3
+fd cypher push dd 75
+spot sova + smoke omen + exec C 4x5 75
+plant omen
+retake 4x5
+L 
+--R4
+fd sova x cypher push long A (cypher) 45
+exec A 3x5 45
+plant fenix
+retake 3x5
+L
+--R5
+spot sova + exec C 25
+plant cypher
+retake 5x5
+fk jett x reyna ap
+L 
+--R6
+fd sova x reyna hold long C 95 
+smoke omen + exec A (cypher) 4x5 75
+plant jett
+retake 4x4
+w
+--R7
+spot + smoke + exec C 5x5 90
+fk fenix x raze push C 90 
+plant cypher    
+retake 5x3
+W
+--R8
+fd cypher x cypher A no trade 75
+spot + smoke + exec C 4x5 35
+plant omen
+retake 4x5
+W   
+--R9
+fk fenix x omen hold B 90
+spot + fail exec C 4x3 70
+exec A 1x1 20
+plant cypher
+W 
+--R10
+exec C 5x5 80 
+fk sova x sova ult long C 80
+plant omen
+retake 4x3
+W
+--R11
+fd jett x raze hold lobby C 90
+drone + smoke + exec A 4x5 40
+L
+--R12
+fd fenix x reyna hold mid trade  90
+smoke + spot + exec 3x4 B 50
+L 
+
+
+--R1
+exec C (sentinela) 5x5 50
+fk cypher x reyna hold dd 45
+no plant
+w 
+--R2
+fk jett x omen hold short a 85
+exec stoped, no plant
+W
+--R3
+exec c (sentinela) 5x5 30 
+fd cypher x cypher hold c 30
+plant
+retake 1x3
+L
+--R4
+fd jett x sova hold dd 95
+exec b 1x4 65
+plant
+L
+--R5
+exec C (sentinela) 5x5 30
+fd cypher x sova hold c 30
+plant
+L
+--R6
+exec C 5x5 70
+fk omen x raze hold c 70
+no plant
+W
+--R7
+fk jett x reyna hold c 50
+exec A 5x4 25
+plant
+retake 4x3
+W
+--R8
+fk omen x omen hold dd 70
+exec c stoped
+no plant
+W
+--R9
+exec A 5x5 50
+fk cypher x raze hold a 50
+exec stoped
+no plant
+W
+--R10
+--R11
+--R12

@@ -7,7 +7,6 @@ from scraping.match_utils import GetMaps, GetAgents, GetPatchVer, Scores
 
 MATCH_OVERVIEW_SUFIX = '?game=all&tab=overview'
 
-
 ## Match Overall Stats
 ## Concats Info from Match Info + Each Map (1-5 Maps)
 def MatchOverviewStats(match_url):
