@@ -15,7 +15,8 @@ def TeamMapStats(team_url):
                       'ATK_ROUND_WIN_RATE', 'ATK_ROUND_W','ATK_ROUND_L', 
                       'DEF_ROUND_WIN_RATE', 'DEF_ROUND_W', 'DEF_ROUND_L', 'Agent Compositions']
   df.drop(['Expand','Agent Compositions'], axis=1, inplace=True)
-  df.drop(df.tail(1).index,inplace=True) ## Drop Icebox Row (for now)
+  if (len(df.tail(1)['ATK_START']) == 1):
+    df.drop(df.tail(1).index,inplace=True) ## Drop Icebox Row
 
   df['Map'].fillna(method='ffill',inplace=True)
   df['MAP_COUNT'] = [int(''.join(filter(str.isdigit, x))) for x in df['Map']]
@@ -32,6 +33,6 @@ def TeamMapStats(team_url):
   map_stats['ATK_ROUND_COUNT'] = map_stats['ATK_ROUND_W'] + map_stats['ATK_ROUND_L']
   map_stats['DEF_ROUND_COUNT'] =  map_stats['DEF_ROUND_W'] + map_stats['DEF_ROUND_L']
   map_stats['ROUND_TOTAL_COUNT'] = map_stats['ATK_ROUND_COUNT'] + map_stats['DEF_ROUND_COUNT']
-  map_stats['TEAM'] = (team_url.split('/')[-1]).upper()
+  map_stats['TEAM'] = (team_url.split('/')[-2]).upper()
 
   return map_stats
