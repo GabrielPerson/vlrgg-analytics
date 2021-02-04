@@ -21,7 +21,7 @@ with open(input_file) as f:
 
 urls = [line.strip() for line in content]
 
-#urls = ['https://www.vlr.gg/stats/?event_id=all&region=all&country=br&min_rounds=100&agent=viper&map_id=all&timespan=60d/']
+#urls = ['https://www.vlr.gg/8298/team-vikings-vs-imperial-esports-ultimaster-aoc-main-event-grand-final/']
 
 
 if output_type.lower() == 'csv':
