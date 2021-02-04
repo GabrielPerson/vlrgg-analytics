@@ -12,7 +12,7 @@ MATCH_ECON_SUFIX = '?game=all&tab=economy'
 ## Create Win, Played, WinRate columns for each Buy Type
 ## Create Opp Team column
 ## Create number of maps column
-def CleanEconStats(df_econ_all, patch):
+def CleanEconStats(df_econ_all, patch, match_id):
   
   econ_cols = ['Team', 'Pistol_W', 'Eco', 'Semi_Eco: 5-10', 'Semi_Buy: 10-20', 'Full_Buy: +20']
   df_econ_all.columns = econ_cols
@@ -40,6 +40,7 @@ def CleanEconStats(df_econ_all, patch):
   df_econ_all['Opp_team'] = [df_econ_all['Team'][1], df_econ_all['Team'][0]]
   df_econ_all['Num_maps'] = df_econ_all['Pistol_P'] / 2
   df_econ_all['Patch'] = patch
+  df_econ_all['match_id'] = match_id
 
   df_econ_all.drop(['Eco', 'Semi_Eco: 5-10', 'Semi_Buy: 10-20', 'Full_Buy: +20'], axis=1, inplace=True)
 
@@ -54,9 +55,10 @@ def MatchEconStats(match_url):
     print("** DATA FRAME READ ERROR -- " + str(match_url) + " **")
   
   patch = GetPatchVer(match_url)
+  match_id = match_url.split('/')[3]
 
   maps, _ = GetMaps(match_url)
-  all_econ_stats = CleanEconStats(df_econ[-1], patch)
+  all_econ_stats = CleanEconStats(df_econ[-1], patch, match_id)
   all_econ_stats['Map'] = 'MATCH'
   n_maps = int(all_econ_stats['Num_maps'][0]) 
 
@@ -64,12 +66,13 @@ def MatchEconStats(match_url):
   if n_maps == 1: 
     map_econ_stats = all_econ_stats.copy()
     map_econ_stats['Map'] = maps[0]
+    map_econ_stats['match_id'] = match_id
     return [all_econ_stats, [map_econ_stats]]
 
   if maps is None: 
     return all_econ_stats
   else:
-    map_econ_stats = [CleanEconStats(df_econ[x*2], patch) for x in range(n_maps)]
+    map_econ_stats = [CleanEconStats(df_econ[x*2], patch, match_id) for x in range(n_maps)]
     for x in range(n_maps):
       map_econ_stats[x]['Map'] = maps[x]
 

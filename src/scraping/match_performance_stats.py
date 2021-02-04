@@ -17,18 +17,20 @@ def MatchPerfStats(match_url):
   
   maps, _ = GetMaps(match_url)
   patch = GetPatchVer(match_url)
+  match_id = match_url.split('/')[3]
   n_maps = int((len(df) / 4)-1)
 
   #df_matchup_all = MatchUpKills(df[:3])
   df_matchup_all = None
 
-  df_mk_clutch_all = MultKCluth(df[3], None, patch)
+  df_mk_clutch_all = MultKCluth(df[3], None, patch, match_id)
+  df_mk_clutch_all['match_id'] = match_id
   df_mk_clutch_all['Map'] = 'MATCH'
   df_mk_clutch_all['Num_maps'] = n_maps
   
   mk_clutch_maps = None
   if n_maps > 0:
-    mk_clutch_maps = [MultKCluth(df[3 + ((x+1)*4)], maps[x], patch) for x in range(n_maps)]
+    mk_clutch_maps = [MultKCluth(df[3 + ((x+1)*4)], maps[x], patch, match_id) for x in range(n_maps)]
 
   return [df_matchup_all, df_mk_clutch_all, mk_clutch_maps]
 
@@ -82,7 +84,7 @@ def MirrorMatchUp(df):
   return exp_df
 
 ## Get Mult Kill and Clutch (1vX) data for each player
-def MultKCluth(df, map, patch):
+def MultKCluth(df, map, patch, match_id):
   
   df.columns = ['Player', 'drop'] + list(df.columns[2:])
   df.drop('drop',axis=1, inplace= True)
@@ -92,6 +94,7 @@ def MultKCluth(df, map, patch):
       df.drop(idx, axis=0, inplace=True)
   df.reset_index(inplace=True, drop=True)
 
+  df['match_id'] = match_id
   df['Team'] = [x.split()[-1] for x in df['Player']]
   df['Player'] = [x.split()[0] for x in df['Player']]
 

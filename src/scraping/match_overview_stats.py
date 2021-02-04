@@ -26,11 +26,13 @@ def MatchOverviewStats(match_url):
   agents = GetAgents(match_url)
   rounds_won = Scores(match_url)
   patch = GetPatchVer(match_url)
+  match_id = match_url.split('/')[3]
   df_match = [df for df in df_match if df.isnull().sum().sum() < 6]
 
   for df in df_match:
     if df.isnull().sum().sum() < 6:
       df.columns = match_cols
+      df['match_id'] = match_id
       df['Team'] = None
       df['Team'] = [x.split(' ')[-1]
                     if len(x.split(' ')) > 1
