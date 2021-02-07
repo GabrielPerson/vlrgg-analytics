@@ -10,6 +10,8 @@ import time
 from pandas.core.common import SettingWithCopyWarning
 warnings.simplefilter(action="ignore", category=SettingWithCopyWarning)
 
+## exec format: python3 file_input_economy.py ../urls/gamelanders.txt gamelanders csv
+##                            argv[0]                 argv[1]          argv[2]   argv[3]            
 start = time.time()
 
 input_file = sys.argv[1]
@@ -25,10 +27,10 @@ urls = [line.strip() for line in content]
 
 
 if output_type.lower() == 'csv':
-    output_file = '../data/csv/' + output_file
+    output_file = '../data/csv/' + output_file + '_economy'
     EconomyDataCSV(urls, output_file)
 elif output_type.lower() == 'xls':
-    output_file = '../data/excel/' + output_file
+    output_file = '../data/excel/' + output_file + '_economy'
     EconomyDataExcel(urls, output_file, ['MATCHES', 'MAPS'])
 else:
     print("** TIPO ERRADO DE ARQUIVO -- USE 'CSV' OU 'XLS' **")
