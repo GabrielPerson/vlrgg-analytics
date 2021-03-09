@@ -27,8 +27,8 @@ def PlayerDataCSV(URLS: list, out_filename: str):
 def EconomyDataCSV(URLS: list, out_filename: str):
 
     data = [MatchEconStats(url) for url in URLS]
-    matches =  pd.concat([x[0] for x in data], ignore_index=True) #df
-    maps = pd.concat([pd.concat(x[1], ignore_index=True)  for x in data], ignore_index=True) #df
+    matches =  pd.concat([x[0] for x in data if x is not None], ignore_index=True) #df
+    maps = pd.concat([pd.concat(x[1], ignore_index=True)  for x in data if x is not None], ignore_index=True) #df
     
     out_filename_match = out_filename + '_MATCHES.csv'
     out_filename_maps = out_filename + '_MAPS.csv'
@@ -39,8 +39,8 @@ def EconomyDataCSV(URLS: list, out_filename: str):
 def OverviewDataCSV(URLS: list, out_filename: str):
 
     data = [MatchOverviewStats(url) for url in URLS]
-    matches =  pd.concat([x[0] for x in data], ignore_index=True) #df
-    maps = pd.concat([pd.concat(x[1:], ignore_index=True) for x in data], ignore_index=True) #df
+    matches =  pd.concat([x[0] for x in data if x is not None], ignore_index=True) #df
+    maps = pd.concat([pd.concat(x[1:], ignore_index=True) for x in data if x is not None], ignore_index=True) #df
 
     out_filename_match = out_filename + '_MATCHES.csv'
     out_filename_maps = out_filename + '_MAPS.csv'
@@ -51,8 +51,8 @@ def OverviewDataCSV(URLS: list, out_filename: str):
 def PerformanceDataCSV(URLS: list, out_filename: str):
 
     data = [MatchPerfStats(url) for url in URLS]
-    matches =  pd.concat([x[1] for x in data], ignore_index=True) #df
-    maps = pd.concat([pd.concat(x[2],ignore_index=True) for x in data], ignore_index=True) #df
+    matches =  pd.concat([x[1] for x in data if x is not None], ignore_index=True) #df
+    maps = pd.concat([pd.concat(x[2],ignore_index=True) for x in data if x is not None], ignore_index=True) #df
 
     out_filename_match = out_filename + '_MATCHES.csv'
     out_filename_maps = out_filename + '_MAPS.csv'

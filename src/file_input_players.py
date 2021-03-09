@@ -9,7 +9,7 @@ from output_csv import PlayerDataCSV
 from pandas.core.common import SettingWithCopyWarning
 warnings.simplefilter(action="ignore", category=SettingWithCopyWarning)
 
-
+##python3 file_input_players.py <input.txt> <outuput> <csv | xls> 
 input_file = sys.argv[1]
 output_file = sys.argv[2]
 output_type = sys.argv[3]
