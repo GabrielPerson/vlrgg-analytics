@@ -3,6 +3,9 @@ import pandas as pd
 import numpy as np 
 import re
 
+import urllib
+from urllib.request import urlopen as uReq
+
 from scraping.match_utils import GetMaps, GetAgents, GetPatchVer, Scores
 
 MATCH_PERFORMANCE_SUFIX = '?game=all&tab=performance'
@@ -14,9 +17,19 @@ def MatchPerfStats(match_url):
     df = pd.read_html(match_url + MATCH_PERFORMANCE_SUFIX)
   except:
     print("** DATA FRAME READ ERROR -- " + str(match_url) +  "**")
+    return None
   
-  maps, _ = GetMaps(match_url)
-  patch = GetPatchVer(match_url)
+  try:
+    client = uReq(match_url)
+    page_html = client.read()
+    client.close()
+  except:
+    print("HTTP Error 404: " + str(match_url) + " Not Found")
+    return None
+  #client.close()
+
+  maps, _ = GetMaps(page_html)
+  patch = GetPatchVer(page_html)
   match_id = match_url.split('/')[3]
   n_maps = int((len(df) / 4)-1)
 

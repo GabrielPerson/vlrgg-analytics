@@ -3,6 +3,8 @@ import pandas as pd
 import numpy as np 
 import re
 
+import urllib
+from urllib.request import urlopen as uReq
 
 from scraping.match_utils import GetMaps, GetAgents, GetPatchVer, Scores
 
@@ -53,11 +55,22 @@ def MatchEconStats(match_url):
     df_econ = pd.read_html(match_url + MATCH_ECON_SUFIX)
   except:
     print("** DATA FRAME READ ERROR -- " + str(match_url) + " **")
+    return None
   
-  patch = GetPatchVer(match_url)
-  match_id = match_url.split('/')[3]
 
-  maps, _ = GetMaps(match_url)
+  try:
+    client = uReq(match_url)
+    page_html = client.read()
+    client.close()
+  except:
+    print("HTTP Error 404: " + str(match_url) + " Not Found")
+    return None
+  #client.close()
+
+  patch = GetPatchVer(page_html)
+  match_id = match_url.split('/')[3]
+  maps, _ = GetMaps(page_html)
+  
   all_econ_stats = CleanEconStats(df_econ[-1], patch, match_id)
   all_econ_stats['Map'] = 'MATCH'
   n_maps = int(all_econ_stats['Num_maps'][0]) 

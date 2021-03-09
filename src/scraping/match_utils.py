@@ -13,15 +13,7 @@ from pandas.core.common import SettingWithCopyWarning
 MAPS = ['Haven', 'Bind', 'Split', 'Ascent', 'Icebox']
 
 ## Retrieve Match Map names
-def GetMaps(url_match):
-
-  try:
-    client = uReq(url_match)
-    page_html = client.read()
-  except urllib.error.URLError as err:
-    print("HTTP Error 404: " + str(url_match) + " Not Found")
-    client.close()
-  client.close()
+def GetMaps(page_html):
 
   try:
     page_soup = soup(page_html,"html.parser")
@@ -43,8 +35,6 @@ def GetMaps(url_match):
         if map_name in map_str: map_list.append(map_name.upper())
     return (map_list, map_adv)
 
-  
-
   # MAPS BEST OF 3/4/5
   for src in map_src:
     for map_name in MAPS:
@@ -55,17 +45,9 @@ def GetMaps(url_match):
   return (map_list, map_adv)
 
 ## Retrieve Agents used by each player on each match map
-def GetAgents(url_match):
+def GetAgents(page_html):
 
   agents = []
-
-  try:
-    client = uReq(url_match)
-    page_html = client.read()
-  except urllib.error.URLError as err:
-    print("HTTP Error 404: " + str(url_match) + " Not Found")
-    client.close()
-  client.close()
 
   try:
     page_soup = soup(page_html,"html.parser")
@@ -74,7 +56,7 @@ def GetAgents(url_match):
   except:
     print("** NO INFO -- AGENTS **")
     return None
-  
+   
   #if mod_agents is not None:
   for x in mod_agents:
     img = x.find('img')
@@ -84,17 +66,9 @@ def GetAgents(url_match):
   return agents
 
 ## Retrive rounds won by each team on each match map
-def Scores(url_match):
+def Scores(page_html):
 
   scores = []
-
-  try:
-    client = uReq(url_match)
-    page_html = client.read()
-  except urllib.error.URLError as err:
-    client.close()
-  client.close()
-
   try:
     page_soup = soup(page_html,"html.parser")
     data_container = page_soup.find("div",{"class":"vm-stats-container"})
@@ -104,22 +78,34 @@ def Scores(url_match):
     return None
 
   for tag in all_scores: scores.append(int(tag.text))
-  
+
   return scores
 
-## Get Valorant Patch Version of a match.
-def GetPatchVer(url_match):
+## Retrieve rounds wonm by each team on each side (ATK/DEF)
+def SideScores(page_html):
 
-  regex = re.compile(r'\d.\d\d') 
+  scores_t = []
+  scores_ct = []
 
   try:
-    client = uReq(url_match)
-    page_html = client.read()
-  except urllib.error.URLError as err:
-    print("HTTP Error 404: " + str(url_match) + " Not Found")
-    client.close()
-  client.close()
+    page_soup = soup(page_html,"html.parser")
+    data_container = page_soup.find("div",{"class":"vm-stats-container"})
+    all_ct = data_container.findAll("span",{"class":"mod-ct"})
+    all_t = data_container.findAll("span",{"class":"mod-t"})
+  except:
+    print("** NO INFO -- SCORES **")
+    return None
 
+  for tag in all_ct: scores_ct.append(int(tag.text))
+  for tag in all_t: scores_t.append(int(tag.text))
+
+  return scores_t, scores_ct
+
+## Get Valorant Patch Version of a match.
+def GetPatchVer(page_html):
+
+  regex = re.compile(r'\d.\d\d') 
+  
   try:
     page_soup = soup(page_html,"html.parser")
     header_date = page_soup.find("div",{"class":"match-header-date"})
