@@ -1,17 +1,14 @@
 #!/usr/bin/python3
 import pandas as pd
 import numpy as np 
-import re
 
-import urllib
 from urllib.request import urlopen as uReq
-
 from scraping.match_utils import GetMaps, GetAgents, GetPatchVer, Scores
 
 MATCH_PERFORMANCE_SUFIX = '?game=all&tab=performance'
 
 ## Player perfomance from match + each map
-def MatchPerfStats(match_url):
+def MatchPerfStats(match_url: str) -> list():
   
   try:
     df = pd.read_html(match_url + MATCH_PERFORMANCE_SUFIX)
@@ -48,7 +45,7 @@ def MatchPerfStats(match_url):
   return [df_matchup_all, df_mk_clutch_all, mk_clutch_maps]
 
 ## Matchup kills from each player duel (Player x Player)
-def MatchUpKills(df_list):
+def MatchUpKills(df_list: list) -> dict:
 
   matchup_kills = {}
   dict_idx = ['all_k', 'first_k', 'op_k']
@@ -78,7 +75,7 @@ def MatchUpKills(df_list):
   return matchup_kills   
 
 ## Expand MatchUp Data Frame to mirror player match ups
-def MirrorMatchUp(df):
+def MirrorMatchUp(df: pd.DataFrame) -> pd.DataFrame:
   
   add_df = pd.DataFrame(0, index = list(df.columns) , columns = list(df.columns) + list(df.index))
   df[list(df.index)] = 0
@@ -97,7 +94,7 @@ def MirrorMatchUp(df):
   return exp_df
 
 ## Get Mult Kill and Clutch (1vX) data for each player
-def MultKCluth(df, map, patch, match_id):
+def MultKCluth(df, map, patch, match_id) -> pd.DataFrame:
   
   df.columns = ['Player', 'drop'] + list(df.columns[2:])
   df.drop('drop',axis=1, inplace= True)
@@ -116,11 +113,11 @@ def MultKCluth(df, map, patch, match_id):
   for idx in 	df.index:
     for col in stats_cols:
       if pd.isna(df.at[idx, col]): df.at[idx, col] = 0
-      if map is not None: df.at[idx, col] = int( str(df.at[idx, col])[0] )
+      if map is not None: df.at[idx, col] = int(str(df.at[idx, col])[0])
 
   df['Opp_Team'] = None
-  df['Opp_Team'][0:5] = df['Team'][9]
-  df['Opp_Team'][5:10] = df['Team'][0]
+  df['Opp_Team'][:5] = df['Team'].iloc[-1]
+  df['Opp_Team'][5:] = df['Team'].iloc[0]
   if map is not None: df['Map'] = map 
   df['Patch'] = patch
 

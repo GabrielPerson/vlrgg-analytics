@@ -9,7 +9,9 @@ import urllib
 from urllib.request import urlopen as uReq
 from pandas.core.common import SettingWithCopyWarning
 
-AGENTS = ['omen', 'cypher', 'sova', 'jett', 'raze', 'breach', 'phoenix', 'reyna', 'killjoy' ,'sage' , 'brimstone', 'viper', 'Skye']
+AGENTS = ['omen', 'cypher', 'sova', 'jett', 'raze', 'breach', 
+          'phoenix', 'reyna', 'killjoy' ,'sage' , 'brimstone', 
+          'viper', 'Skye', 'yoru', 'astra']
 
 ## Clean + Format numeric data on agent table
 def CleanAgentPick(df):

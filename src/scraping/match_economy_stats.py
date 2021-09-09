@@ -14,13 +14,13 @@ MATCH_ECON_SUFIX = '?game=all&tab=economy'
 ## Create Win, Played, WinRate columns for each Buy Type
 ## Create Opp Team column
 ## Create number of maps column
-def CleanEconStats(df_econ_all, patch, match_id):
+def CleanEconStats(df_econ_all: pd.DataFrame, 
+                  patch: float, match_id: int) -> pd.DataFrame:
   
   econ_cols = ['Team', 'Pistol_W', 'Eco', 'Semi_Eco: 5-10', 'Semi_Buy: 10-20', 'Full_Buy: +20']
   df_econ_all.columns = econ_cols
   
   df_econ_all['Pistol_P'] = df_econ_all['Pistol_W'][0] + df_econ_all['Pistol_W'][1] 
-  df_econ_all['Pistol_P'] = df_econ_all['Pistol_W'][0] + df_econ_all['Pistol_W'][1]
   df_econ_all['Pistol_WR'] = round(df_econ_all['Pistol_W'] / df_econ_all['Pistol_P'] * 100,0)
 
   df_econ_all['Eco_0_5_P'] = [int(''.join(filter(str.isdigit, x.split()[0]))) for x in df_econ_all['Eco']]  
@@ -49,7 +49,7 @@ def CleanEconStats(df_econ_all, patch, match_id):
   return df_econ_all
 
 ## Get Match Economy Sats
-def MatchEconStats(match_url):
+def MatchEconStats(match_url: str) -> list:
   
   try:
     df_econ = pd.read_html(match_url + MATCH_ECON_SUFIX)
@@ -57,7 +57,6 @@ def MatchEconStats(match_url):
     print("** DATA FRAME READ ERROR -- " + str(match_url) + " **")
     return None
   
-
   try:
     client = uReq(match_url)
     page_html = client.read()
@@ -73,7 +72,7 @@ def MatchEconStats(match_url):
   
   all_econ_stats = CleanEconStats(df_econ[-1], patch, match_id)
   all_econ_stats['Map'] = 'MATCH'
-  n_maps = int(all_econ_stats['Num_maps'][0]) 
+  n_maps = int(all_econ_stats['Num_maps'][0])
 
   ## Case BO1
   if n_maps == 1: 

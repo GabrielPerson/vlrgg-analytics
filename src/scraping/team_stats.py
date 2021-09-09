@@ -3,7 +3,7 @@ import pandas as pd
 from pandas.core.common import SettingWithCopyWarning
 
 ## Get and Clean Team Map Stats
-def TeamMapStats(team_url):
+def TeamMapStats(team_url: str) -> pd.DataFrame:
   
   try:
     df = pd.read_html(team_url)[0]

@@ -1,19 +1,15 @@
 #!/usr/bin/python3
 
 ## Web Scraping
-import bs4
 from bs4 import BeautifulSoup as soup
-import urllib
-from urllib.request import urlopen as uReq
 
-import pandas as pd 
 import re
 from pandas.core.common import SettingWithCopyWarning
 
-MAPS = ['Haven', 'Bind', 'Split', 'Ascent', 'Icebox']
+MAPS = ['Haven', 'Bind', 'Split', 'Ascent', 'Icebox', 'Breeze']
 
 ## Retrieve Match Map names
-def GetMaps(page_html):
+def GetMaps(page_html: str):
 
   try:
     page_soup = soup(page_html,"html.parser")
@@ -45,7 +41,7 @@ def GetMaps(page_html):
   return (map_list, map_adv)
 
 ## Retrieve Agents used by each player on each match map
-def GetAgents(page_html):
+def GetAgents(page_html: str) -> list():
 
   agents = []
 
@@ -66,7 +62,7 @@ def GetAgents(page_html):
   return agents
 
 ## Retrive rounds won by each team on each match map
-def Scores(page_html):
+def Scores(page_html: str) -> list():
 
   scores = []
   try:
@@ -82,27 +78,27 @@ def Scores(page_html):
   return scores
 
 ## Retrieve rounds wonm by each team on each side (ATK/DEF)
-def SideScores(page_html):
+def SideScores(page_html: str):
 
-  scores_t = []
-  scores_ct = []
+  scores_atk = []
+  scores_def = []
 
   try:
     page_soup = soup(page_html,"html.parser")
     data_container = page_soup.find("div",{"class":"vm-stats-container"})
-    all_ct = data_container.findAll("span",{"class":"mod-ct"})
-    all_t = data_container.findAll("span",{"class":"mod-t"})
+    all_def = data_container.findAll("span",{"class":"mod-ct"})
+    all_atk = data_container.findAll("span",{"class":"mod-t"})
   except:
     print("** NO INFO -- SCORES **")
     return None
 
-  for tag in all_ct: scores_ct.append(int(tag.text))
-  for tag in all_t: scores_t.append(int(tag.text))
+  for tag in all_def: scores_def.append(int(tag.text))
+  for tag in all_atk: scores_atk.append(int(tag.text))
 
-  return scores_t, scores_ct
+  return scores_atk, scores_def
 
 ## Get Valorant Patch Version of a match.
-def GetPatchVer(page_html):
+def GetPatchVer(page_html: str) -> float:
 
   regex = re.compile(r'\d.\d\d') 
   
