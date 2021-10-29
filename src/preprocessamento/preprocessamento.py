@@ -24,6 +24,8 @@ SENTINEL = ['cypher', 'sage', 'killjoy']
 INITIATOR = ['breach', 'sova', 'skye']
 AGENTS = DUELIST + CONTROLLER + SENTINEL + INITIATOR
 
+NUM_TEAMS = 20
+
 CSV_PATH = '../data/csv/'
 EXCEL_PATH = '../data/excel/'
 
@@ -213,6 +215,9 @@ def Preproc():
                                     right_on=['match_id','Map','Player']).drop_duplicates()
     #base_geral = merge_over_perf.merge(economy_maps, how='inner', left_on=['match_id','Map','Team_x'],right_on=['match_id','Map','Team']).drop_duplicates()
 
+    # Filter data using most frequent teams
+    top_teams = list(base_geral['Team_x'].value_counts()[:NUM_TEAMS].index)
+    base_geral = base_geral[base_geral['Team_x'].isin(top_teams)]
 
     # Replace Null values and create new features
     base_geral = base_geral.replace(np.nan, 0)
@@ -221,6 +226,7 @@ def Preproc():
     base_geral['CPR'] = round(base_geral['total_clutch'] / base_geral['total_rounds'], 2)
     base_geral = base_geral[base_geral.match_id != 16846]
 
+    # Aggregate data by Team-Match-Map
     base_agg = aggBase(base_geral)
     base_agg = base_agg.replace(np.nan, 0)
     base_agg[AGENTS] = base_agg[AGENTS].replace(2, 1)
@@ -229,7 +235,10 @@ def Preproc():
     base_agg = base_agg.sort_values(['match_id', 'Map']).reset_index(drop=True)
     base_agg = base_agg.drop(780,axis=0).reset_index(drop=True)
 
+    # Create composition scores for Agro, Tempo and Control Compositios
     base_agg = CompScore(base_agg)
+    
+    # Select and rename final columns
     features_keep_players = ['Player', 'Agents','ACS', 'K',               'D',               'A',
                'KD_DIFF',             'ADR',             'HS%',
                     'FK',              'FD',      'FK_FD_DIFF', 'match_id', 'Map',
@@ -242,15 +251,19 @@ def Preproc():
                   'total_mult_kill','total_clutch', 'MKPR',
                    'CPR']
     base_geral = base_geral[features_keep_players]
-    base_geral.columns = ['Jogador', 'Agente', 'ACS', 'Kills', 'Deaths', 'Assists',
-    'Diferenca Kill/Death','ADR', 'HS%','First Kills', 'First Deaths', 'Diferenca FK/FD',
+    base_geral.columns = [
+    'Jogador', 'Agente', 'ACS', 
+    'Kills', 'Deaths', 'Assists',
+    'Diferenca Kill/Death','ADR', 'HS%',
+    'First Kills', 'First Deaths', 'Diferenca FK/FD',
     'ID Partida', 'Mapa','Kills Por Round', 'Deaths Por Round','Assists Por Round',
     'First Kill Por Round', 'Win Rate First Kills', 'First Death Por Round',
     'Double Kills', 'Triple Kills', 'Quadra Kills', 'Penta Kills',
     '1v1', '1v2', '1v3', '1v4', '1v5','Nota Economia', 'Plants', 'Defuses',
     'Total Mult Kills', 'Total Clutches', 'Clutches Por Round','Mult Kills Por Round']
 
-    feat_keep_teams = ['Team_x', 'match_id', 'Map', 'ACS', 
+    feat_keep_teams = [
+    'Team_x', 'match_id', 'Map', 'ACS', 
     'K', 'D', 'A', 'KD_DIFF', 'ADR',
     'HS%', 'ECON', 'FK', 'FD', 'KPR', 
     'DPR', 'APR', 'FKPR', 'FDPR', '2K',
@@ -264,7 +277,8 @@ def Preproc():
 
     base_agg = base_agg[feat_keep_teams]
 
-    base_agg.columns=['Time', 'ID Partida', 'Mapa', 'ACS', 
+    base_agg.columns=[
+    'Time', 'ID Partida', 'Mapa', 'ACS', 
     'Kills', 'Deaths', 'Assists','Diferenca Kill/Death', 'ADR', 
     'HS%', 'Nota Economia','First Kills', 'First Deaths', 'Kills Por Round', 
     'Deaths Por Round','Assists Por Round', 'First Kill Por Round', 'First Death Por Round','Double Kills', 
