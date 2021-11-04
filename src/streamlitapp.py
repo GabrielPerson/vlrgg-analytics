@@ -1,11 +1,11 @@
 import streamlit as st
+st.set_option('deprecation.showPyplotGlobalUse', False)
+
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 from preprocessamento.preprocessamento import Preproc
-
-st.set_option('deprecation.showPyplotGlobalUse', False)
 
 
 def FilterJogadores(df, id, times, agentes, mapas):
@@ -115,10 +115,10 @@ filtro_id = st.sidebar.select_slider('Filtro de Partidas - ID abaixo de 7000 cor
 ## Amostra das bases
 row1_spacer1, row1_1, row1_spacer2, row1_2, row1_spacer3  = st.columns((.2, 4, .4, 4, .2))
 with row1_1:
-    ''' ## Dados de Jogadores'''
+    ''' ## Dados de Jogadores - Amostra de 20 Jogadores'''
     st.write(df_jogadores.sample(20))
 with row1_2:
-    ''' ## Dados de Times'''
+    ''' ## Dados de Times - Amostra de 20 Times'''
     st.write(df_times.sample(20))
 st.markdown('''---''')
 
@@ -126,11 +126,11 @@ st.markdown('''---''')
 row2_spacer1, row2_1, row2_spacer2, row2_2, row2_spacer3  = st.columns((.2, 4, .4, 4, .2))
 filter_times_antigo, filter_times_novo = FilterTimes(df_times, filtro_id, filtro_times, filtro_agentes, filtro_mapas)
 with row2_1:
-    '''### Dados Filtrados Times - Antes ID'''
+    f'''### Dados Filtrados Times - Antes ID {filtro_id}'''
     st.write(f'Total de Linhas - {filter_times_antigo.shape[0]}')
     st.write(filter_times_antigo)
 with row2_2:
-    '''### Dados Filtrados Times - Depois ID'''
+    f'''### Dados Filtrados Times - Depois ID {filtro_id}'''
     st.write(f'Total de Linhas - {filter_times_novo.shape[0]}')
     st.write(filter_times_novo)
 
@@ -139,39 +139,39 @@ st.sidebar.markdown('''
 ---
 ## Filtros dos gráficos de Times
 ''')
-categoria_grafico_count = st.sidebar.selectbox('Selecione a coluna para apresentar no gráfico de Contagem Times', options = df_times.select_dtypes(include=['object']).columns)
-categoria_grafico_dist = st.sidebar.selectbox('Selecione a coluna para apresentar no gráfico de Distribuição', options = df_times.select_dtypes(exclude=['object']).columns)
+col_count_time = st.sidebar.selectbox('Selecione a coluna para apresentar no gráfico de Contagem Times', options = df_times.select_dtypes(include=['object']).columns)
+col_dist_jogador = st.sidebar.selectbox('Selecione a coluna para apresentar no gráfico de Distribuição', options = df_times.select_dtypes(exclude=['object']).columns)
 num_obj = st.sidebar.slider('Quantidade de observações do gráfico', min_value=1, max_value=20)
 ## -------------------------------
 
 ## Graficos de Contagem Times -- Antes x Depois
 row3_spacer1,row3_1, row3_spacer2, row3_2, row3_spacer3  = st.columns((.2, 2, .4, 2, .2))
 with row3_1:
-    '''### Gráfico de Contagem - Dados Antes ID'''
-    Countplot(filter_times_antigo, categoria_grafico_count, num_obj)
+    f'''### Gráfico de Contagem - Dados Antes ID {filtro_id}'''
+    Countplot(filter_times_antigo, col_count_time, num_obj)
 with row3_2:
-    '''### Gráfico de Contagem - Dados Após ID'''
-    Countplot(filter_times_novo, categoria_grafico_count, num_obj)
+    f'''### Gráfico de Contagem - Dados Após ID {filtro_id}'''
+    Countplot(filter_times_novo, col_count_time, num_obj)
 
 ## Graficos de Distribuicao Times -- Antes x Depois
 row4_spacer1,row4_1, row4_spacer2, row4_2, row4_spacer3  = st.columns((.2, 2, .4, 2, .2))
 with row4_1:
-    '''### Gráfico de Distribuição - Dados Antes ID'''
-    Distplot(filter_times_antigo, categoria_grafico_dist)
+    f'''### Gráfico de Distribuição - Dados Antes ID {filtro_id}'''
+    Distplot(filter_times_antigo, col_dist_jogador)
 with row4_2:
-    '''### Gráfico de Distribuição - Dados Após ID'''
-    Distplot(filter_times_novo, categoria_grafico_dist)
+    f'''### Gráfico de Distribuição - Dados Após ID {filtro_id}'''
+    Distplot(filter_times_novo, col_dist_jogador    )
 
 ## Sidebar -----------------------
 st.sidebar.markdown(''' 
 ---
 ## Filtros dos gráficos de Jogadores
 ''')
-categoria_grafico_count = st.sidebar.selectbox('Selecione a coluna para apresentar no gráfico de Contagem Times', options = df_jogadores.select_dtypes(include=['object']).columns)
-categoria_grafico_dist = st.sidebar.selectbox('Selecione a coluna para apresentar no gráfico de Distribuição', options = df_jogadores.select_dtypes(exclude=['object']).columns)
+#col_count_jogador = st.sidebar.selectbox('Selecione a coluna para apresentar no gráfico de Contagem Times', options = df_jogadores.select_dtypes(include=['object']).columns)
+col_dist_jogador = st.sidebar.selectbox('Selecione a coluna para apresentar no gráfico de Distribuição - Jogadores', options = df_jogadores.select_dtypes(exclude=['object']).columns)
 #num_obj = st.sidebar.slider('Quantidade de observações do gráfico', min_value=1, max_value=20)
 ## -------------------------------
-
+st.markdown('''---''')
 ## Dados Jogadores Filtrados
 row5_spacer1, row5_1, row5_spacer2, row5_2, row5_spacer3  = st.columns((.2, 4, .4, 4, .2))
 filter_jogador_antigo, filter_jogador_novo = FilterJogadores(df_jogadores, filtro_id, filtro_times, filtro_agentes, filtro_mapas)
@@ -187,8 +187,10 @@ with row5_2:
 ## Graficos de Contagem Times -- Antes x Depois
 row3_spacer1,row3_1, row3_spacer2, row3_2, row3_spacer3  = st.columns((.2, 2, .4, 2, .2))
 with row3_1:
-    '''### Gráfico de Contagem - Dados Antes ID'''
-    Countplot(filter_times_antigo, categoria_grafico_count, num_obj)
+    f'''### Gráfico de Distribuição - Dados Antes ID {filtro_id}'''
+    Distplot(filter_jogador_antigo, col_dist_jogador)
+    #Countplot(filter_jogador_antigo, categoria_grafico_count, num_obj)
 with row3_2:
-    '''### Gráfico de Contagem - Dados Após ID'''
-    Countplot(filter_times_novo, categoria_grafico_count, num_obj)
+    f'''### Gráfico de Distribuição - Dados Após ID {filtro_id}'''
+    Distplot(filter_jogador_novo, col_dist_jogador)
+    #Countplot(filter_jogador_novo, categoria_grafico_count, num_obj)
