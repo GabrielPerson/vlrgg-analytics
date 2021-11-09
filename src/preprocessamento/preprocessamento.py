@@ -80,7 +80,7 @@ def aggBase(base_geral):
     return merge_agg
     
 ## Get Map data for all teams
-def AllTeamsMaps(files, type, team_col, filter_teams):
+def AllTeamsMaps(files, type, team_col):
     concat = pd.concat([ImportData(team_file, type)[0] for team_file in files])
     #filter = FilterCol(concat, team_col, filter_teams)
     filter = concat
@@ -90,7 +90,7 @@ def AllTeamsMaps(files, type, team_col, filter_teams):
     filter[team_col][(filter[team_col] == 'Ingaming') | (filter[team_col] == 'NMDM')] = 'Inga'
     filter[team_col][filter[team_col] == 'FF'] = 'VORA'
     filter[team_col][(filter[team_col] == 'HAVA') | (filter[team_col] == 'HL')] = 'HAVAN'
-    filter['Opp_Team'][(filter['Opp_Team'] == 'HAVA') | (filter['Opp_Team'] == 'HL')] = 'HAVAN'
+    if type != 'economy': filter['Opp_Team'][(filter['Opp_Team'] == 'HAVA') | (filter['Opp_Team'] == 'HL')] = 'HAVAN'
     filter[team_col][filter[team_col] == 'FURI'] = 'FURIA'
     filter[team_col][(filter[team_col] == 'S5') | (filter[team_col] == 'Shar')] = 'Sharks'
     
@@ -202,12 +202,13 @@ def CompScore(df):
 
 def Preproc():
 
-    overview_maps = AllTeamsMaps(FILES, 'overview', 'Team', ALL_TEAMS)
-    performance_maps = AllTeamsMaps(FILES, 'performance', 'Team', ALL_TEAMS)
-    #economy_maps = AllTeamsMaps(ALL_FILES, 'economy', 'Team', ALL_TEAMS)
+    overview_maps = AllTeamsMaps(FILES, 'overview', 'Team')
+    performance_maps = AllTeamsMaps(FILES, 'performance', 'Team')
+    economy_maps = AllTeamsMaps(FILES, 'economy', 'Team')
 
     overview_maps.drop('Patch',axis=1, inplace=True)
     performance_maps.drop('Patch',axis=1, inplace=True)
+    economy_maps.drop(['Patch', 'Opp_team', 'Num_maps'], axis=1, inplace=True)
 
     base_geral = overview_maps.merge(performance_maps, 
                                     how='inner', 
@@ -224,7 +225,7 @@ def Preproc():
     base_geral = GetDummies(base_geral, ['Agents'])
     base_geral['MKPR'] = round(base_geral['total_mult_kill'] / base_geral['total_rounds'], 2)
     base_geral['CPR'] = round(base_geral['total_clutch'] / base_geral['total_rounds'], 2)
-    base_geral = base_geral[base_geral.match_id != 16846]
+    base_geral = base_geral[(base_geral.match_id != 16846) & (base_geral.Agents != 0)]
 
     # Aggregate data by Team-Match-Map
     base_agg = aggBase(base_geral)
@@ -233,10 +234,18 @@ def Preproc():
     base_agg = base_agg[base_agg.FKPR < 1]
     base_agg.RESULT = base_agg.RESULT.replace({'W':'Vitoria', 'L': 'Derrota'})
     base_agg = base_agg.sort_values(['match_id', 'Map']).reset_index(drop=True)
-    base_agg = base_agg.drop(780,axis=0).reset_index(drop=True)
+    #base_agg = base_agg.drop(780,axis=0).reset_index(drop=True)
+
+    # Merge + Economy Data
+    base_agg = base_agg.merge(economy_maps,
+                            how='inner',
+                            left_on=['match_id','Map','Team_x'],
+                            right_on=['match_id', 'Map', 'Team'])
 
     # Create composition scores for Agro, Tempo and Control Compositios
-    base_agg = CompScore(base_agg)
+    base_agg = CompScore(base_agg).drop_duplicates()
+
+    base_agg[['Semi_Eco_5_10_WR', 'Semi_Buy_10_20_WR']] = base_agg[['Semi_Eco_5_10_WR',  'Semi_Buy_10_20_WR']].fillna(0)
     
     # Select and rename final columns
     features_keep_players = ['Player', 'Agents','ACS', 'K',               'D',               'A',
@@ -271,9 +280,13 @@ def Preproc():
     '1v3', '1v4', '1v5', 'PL', 'DE',
     'total_mult_kill', 'MKPR', 'total_clutch', 'CPR', 'Opp_Team_x', 'rounds_won', 
     'rounds_lost', 'ct_rounds_won', 'ct_rounds_lost','t_rounds_won', 't_rounds_lost', 
-    'total_rounds', 'win_rate', 'ct_wr', 't_wr', 'RESULT', 
+    'Pistol_W', 'Pistol_P', 'Pistol_WR', 
+    'Eco_0_5_P', 'Eco_0_5_W', 'Eco_0_5_WR', 
+    'Semi_Eco_5_10_P', 'Semi_Eco_5_10_W', 'Semi_Eco_5_10_WR',
+    'Semi_Buy_10_20_P', 'Semi_Buy_10_20_W', 'Semi_Buy_10_20_WR',
+    'Full_Buy_20_P', 'Full_Buy_20_W', 'Full_Buy_20_WR',
     'agro_score', 'tempo_score', 'control_score', 
-    'opp_agro_score', 'opp_tempo_score', 'opp_control_score']
+    'opp_agro_score', 'opp_tempo_score', 'opp_control_score', 'total_rounds', 'win_rate', 'ct_wr', 't_wr', 'RESULT']
 
     base_agg = base_agg[feat_keep_teams]
 
@@ -286,9 +299,13 @@ def Preproc():
     '1v3', '1v4', '1v5', 'Plants', 'Defuses', 
     'Total Mult Kills', 'Mult Kills Por Round', 'Total Clutches','Clutches Por Round', 'Time Oponente', 'Rounds Vencidos',
     'Rounds Perdidos', 'Vitorias DEF', 'Derrotas DEF', 'Vitorias ATK', 'Derrotas ATK',
-    'Rounds Totais', 'Win Rate', 'Win Rate DEF', 'Win Rate ATK', 'Resultado',
+    'Vitorias Pistol', 'Total Pistol', 'Win Rate Pistol',
+    'Total Eco', 'Vitorias Eco', 'Win Rate Eco',
+    'Total Semi Eco', 'Vitorias Semi Eco', 'Win Rate Semi Eco',
+    'Total Semi Buy', 'Vitorias Semi Buy', 'Win Rate Semi Buy',
+    'Total Full Buy', 'Vitorias Full Buy', 'Win Rate Full Buy',
     'Score Comp Agro', 'Score Comp Tempo', 'Score Comp Control',
-    'Score Comp Agro Oponente', 'Score Comp Tempo Oponente','Score Comp Control Oponente'] 
+    'Score Comp Agro Oponente', 'Score Comp Tempo Oponente','Score Comp Control Oponente', 'Rounds Totais', 'Win Rate', 'Win Rate DEF', 'Win Rate ATK', 'Resultado'] 
 
     return base_geral, base_agg
 
