@@ -245,20 +245,22 @@ def Preproc():
     # Create composition scores for Agro, Tempo and Control Compositios
     base_agg = CompScore(base_agg).drop_duplicates()
 
-    base_agg[['Semi_Eco_5_10_WR', 'Semi_Buy_10_20_WR']] = base_agg[['Semi_Eco_5_10_WR',  'Semi_Buy_10_20_WR']].fillna(0)
+
+    base_agg[['Semi_Eco_5_10_WR', 'Semi_Buy_10_20_WR']] = base_agg[['Semi_Eco_5_10_WR', 'Semi_Buy_10_20_WR']].fillna(0)
     
     # Select and rename final columns
-    features_keep_players = ['Player', 'Agents','ACS', 'K',               'D',               'A',
-               'KD_DIFF',             'ADR',             'HS%',
-                    'FK',              'FD',      'FK_FD_DIFF', 'match_id', 'Map',
-                    'KPR',             'DPR',             'APR',
-                    'FKPR',            'FKWR',            'FDPR',
-                    '2K',              '3K',              '4K',
-                    '5K',             '1v1',             '1v2',
-                   '1v3',             '1v4',             '1v5',
-                  'ECON',              'PL',              'DE',
-                  'total_mult_kill','total_clutch', 'MKPR',
-                   'CPR']
+    features_keep_players = [
+    'Player', 'Agents','ACS', 'K','D','A',
+    'KD_DIFF','ADR','HS%',
+    'FK','FD','FK_FD_DIFF', 'match_id', 'Map',
+    'KPR','DPR','APR',
+    'FKPR','FKWR','FDPR',
+    '2K','3K','4K',
+    '5K','1v1','1v2',
+    '1v3','1v4','1v5',
+    'ECON','PL','DE',
+    'total_mult_kill','total_clutch', 'MKPR',
+    'CPR']
     base_geral = base_geral[features_keep_players]
     base_geral.columns = [
     'Jogador', 'Agente', 'ACS', 

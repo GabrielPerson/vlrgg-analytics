@@ -1,3 +1,23 @@
+'''
+FUNCIONALIDADES DA APLICAÇÃO
+
+- VISUALIAÇÕES
+    . correlações (seletor de váriaveis X e Y)
+    . countplot
+    . ECDF
+    . estatísticas (min, max, med, mean)
+
+
+- FILTROS
+    . filtro por data (match id)
+    . agentes, times, mapas
+
+- INTERAÇÕES
+    . download de tabelas
+    . download de gráficos
+    . acesso externo (via deploy github)
+
+'''
 import streamlit as st
 st.set_option('deprecation.showPyplotGlobalUse', False)
 
@@ -5,6 +25,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
+from io import StringIO, BytesIO
 from preprocessamento.preprocessamento import Preproc
 
 
@@ -26,6 +47,8 @@ def FilterTimes(df, id, times, mapas):
     df_depois = df[df['ID Partida'] >= id]
 
     return df_antes, df_depois
+
+#def ECDFPlot(df, col):
 
 def Distplot(df, col):
 
@@ -57,6 +80,7 @@ def Distplot(df, col):
     ax.set_ylabel('Quantidade', fontsize = 12)
     
     st.pyplot(fig)
+    #DownloadPlot(ax)
 
 def Countplot(df, col,num_obj):
 
@@ -90,15 +114,83 @@ def Countplot(df, col,num_obj):
   
     st.pyplot(fig)
 
+def DownloadPlot(fig):
+
+    buffer = StringIO()
+    fig.write_html(buffer, include_plotlyjs='cdn')
+    html_bytes = buffer.getvalue().encode()
+
+    st.download_button(
+            label='Download Plot via HTML',
+            data=html_bytes,
+            file_name='plot.html',
+            mime='text/html'
+        )
+
+@st.cache
+def DfToCSV(df):
+    return df.to_csv(index=False).encode('utf-8')
+
+## Funcao preprocessamento (leitura de arquivo e format de datasets)
 df_jogadores, df_times = Preproc()
 
 TIMES = df_times.Time.unique()
 AGENTES = df_jogadores.Agente.unique()
 MAPAS = df_times.Mapa.unique()
 ID_PARTIDA = df_times['ID Partida'].unique()
+TITLE = "INTERFACE WEB DE VISUALIZAÇÃO DE ESTATÍSTICAS DO CENÁRIO COMPETITIVO BRASILEIRO DE VALORANT"
 
-st.title("APP VISUALIZAÇÃO DADOS VALORANT")
-st.image('../img/VALORANT_LOGO.png', width = 750)
+
+#st.image('../img/VALORANT_LOGO.png', width = 750)
+st.set_page_config(page_title=TITLE,layout='wide')
+
+f'''# {TITLE} '''
+
+## Storytelling
+
+'''
+# 1. Introdução
+
+Valorant como promessa dos FPS.
+
+Organizações investindo nos times e em profissionais técnicos.
+
+Plataformas já existentes para estudo de adversário e aprimoramento tático.
+
+Trabalho visa implementar os conceitos aprendidos ao longo do curso utilizando técnicas de mineração de dados, KDD
+para a identificação de padrões e quantificação das principais métricas de performance de times e jogadores.
+
+As análises são divulgadas ao público interessado através desta interface.
+
+# 2. Metodologia
+
+## 2.1 Fonte de Dados
+
+Website www.vlr.gg, pioneiro na divulgação de resultados e estatísticas dos principais campeonatos de valorant.
+
+Estatísticas dispostas principalmente em tabelas HTML e containers específicos divididas principalmente em "Overview", "Performance" e "Economy"
+
+## 2.2 Extração dos Dados
+
+Extração realizada através de web scraping (pandas + beautiful soup). Páginas são acessadas através do id de suas respectivas partiads
+
+## 2.3 Armazenamento dos Dados
+
+Dados extraídos são armazenados localmente em arquivos CSV para fácil acesso futuro.
+
+## 2.4 Análise de Dados
+
+# 3. Resultados
+
+## 3.1 Base de Dados
+## 3.2 Interface Web
+
+# 4. Conclusão
+
+---
+'''
+
+
 
 ##QUAIS FILTROS EU QUERO PARA OS DADOS
 # TIMES
@@ -115,17 +207,31 @@ filtro_id = st.sidebar.select_slider('Filtro de Partidas - ID abaixo de 7000 cor
 
 
 ## Amostra das bases
-row1_spacer1, row1_1, row1_spacer2, row1_2, row1_spacer3  = st.columns((.2, 4, .4, 4, .2))
+row1_1, row1_2  = st.columns(2)
 with row1_1:
     ''' ## Dados de Jogadores - Amostra de 20 Jogadores'''
     st.write(df_jogadores.sample(20,replace=True))
+    csv_jogadores = DfToCSV(df_jogadores)
+    st.download_button(
+        label='Baixar Conjunto de Dados de Jogadores',
+        data=csv_jogadores,
+        file_name='jogadores.csv',
+        mime='text/csv'
+    )
 with row1_2:
     ''' ## Dados de Times - Amostra de 20 Times'''
     st.write(df_times.sample(20, replace=True))
+    csv_times = DfToCSV(df_times)
+    st.download_button(
+        label='Baixar Conjunto de Dados de Times',
+        data=csv_times,
+        file_name='times.csv',
+        mime='text/csv'
+    )
 st.markdown('''---''')
 
 ## Dados Times Filtrados
-row2_spacer1, row2_1, row2_spacer2, row2_2, row2_spacer3  = st.columns((.2, 4, .4, 4, .2))
+row2_1, row2_2 = st.columns(2)
 filter_times_antigo, filter_times_novo = FilterTimes(df_times, filtro_id, filtro_times, filtro_mapas)
 with row2_1:
     f'''### Dados Filtrados Times - Antes ID {filtro_id}'''
@@ -147,7 +253,7 @@ num_obj = st.sidebar.slider('Quantidade de valores do gráfico de Contagem', min
 ## -------------------------------
 
 ## Graficos de Contagem Times -- Antes x Depois
-row3_spacer1,row3_1, row3_spacer2, row3_2, row3_spacer3  = st.columns((.2, 2, .4, 2, .2))
+row3_1, row3_2  = st.columns(2)
 with row3_1:
     f'''### Gráfico de Contagem - Dados Antes ID {filtro_id}'''
     Countplot(filter_times_antigo, col_count_time, num_obj)
@@ -156,7 +262,7 @@ with row3_2:
     Countplot(filter_times_novo, col_count_time, num_obj)
 
 ## Graficos de Distribuicao Times -- Antes x Depois
-row4_spacer1,row4_1, row4_spacer2, row4_2, row4_spacer3  = st.columns((.2, 2, .4, 2, .2))
+row4_1, row4_2  = st.columns(2)
 with row4_1:
     f'''### Gráfico de Distribuição - Dados Antes ID {filtro_id}'''
     Distplot(filter_times_antigo, col_dist_jogador)
@@ -174,6 +280,7 @@ col_count_jogador = st.sidebar.selectbox('Selecione a coluna para apresentar no 
 col_dist_jogador = st.sidebar.selectbox('Selecione a coluna para apresentar no gráfico de Distribuição - Jogadores', options = df_jogadores.select_dtypes(exclude=['object']).columns)
 #num_obj = st.sidebar.slider('Quantidade de observações do gráfico', min_value=1, max_value=20)
 ## -------------------------------
+
 st.markdown('''---''')
 ## Dados Jogadores Filtrados
 row5_spacer1, row5_1, row5_spacer2, row5_2, row5_spacer3  = st.columns((.2, 4, .4, 4, .2))
