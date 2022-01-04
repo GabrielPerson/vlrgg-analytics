@@ -2,19 +2,18 @@
 FUNCIONALIDADES DA APLICAÇÃO
 
 - VISUALIAÇÕES
-    . correlações (seletor de váriaveis X e Y)
-    . countplot
-    . ECDF
+    . correlações (seletor de váriaveis X e Y) --- DONE
+    . countplot -- DONE
+    . ECDF --- DONE
     . estatísticas (min, max, med, mean)
 
-
 - FILTROS
-    . filtro por data (match id)
-    . agentes, times, mapas
+    . filtro por data (match id) --- DONE
+    . agentes, times, mapas --- DONE
 
 - INTERAÇÕES
-    . download de tabelas
-    . download de gráficos
+    . download de tabelas -- DONE
+    . download de gráficos -- DIFICIL
     . acesso externo (via deploy github)
 
 '''
@@ -197,51 +196,6 @@ TITLE = "INTERFACE WEB DE VISUALIZAÇÃO DE ESTATÍSTICAS DO CENÁRIO COMPETITIV
 
 st.set_page_config(page_title=TITLE,layout='wide')
 f'''# {TITLE} '''
-
-## Storytelling / Documentacao
-with st.expander('Introdução'):
-    '''
-    Valorant como promessa dos FPS.
-
-    Organizações investindo nos times e em profissionais técnicos.
-
-    Plataformas já existentes para estudo de adversário e aprimoramento tático.
-
-    Trabalho visa implementar os conceitos aprendidos ao longo do curso utilizando técnicas de mineração de dados, KDD
-    para a identificação de padrões e quantificação das principais métricas de performance de times e jogadores.
-
-    As análises são divulgadas ao público interessado através desta interface.
-    '''
-
-with st.expander('Metodologia'):
-    '''
-
-    ### Fonte de Dados
-
-    Website www.vlr.gg, pioneiro na divulgação de resultados e estatísticas dos principais campeonatos de valorant.
-
-    Estatísticas dispostas principalmente em tabelas HTML e containers específicos divididas principalmente em "Overview", "Performance" e "Economy"
-
-    ### Extração e Armazenamento dos Dados
-
-    Extração realizada através de web scraping (pandas + beautiful soup). Páginas são acessadas através do id de suas respectivas partiads
-
-    Dados extraídos são armazenados localmente em arquivos CSV para fácil acesso futuro.
-
-    ### Análise de Dados
-    '''
-
-with st.expander('Resultados'):
-    '''
-    ### Base de Dados
-
-
-    ### Interface Web
-    '''
-
-with st.expander('Conclusão'):
-    '''
-    '''
 
 '''---'''
 
