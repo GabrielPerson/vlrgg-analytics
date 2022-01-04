@@ -25,6 +25,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
+from  statsmodels.distributions.empirical_distribution import ECDF
 from io import StringIO, BytesIO
 from preprocessamento.preprocessamento import Preproc
 
@@ -48,7 +49,32 @@ def FilterTimes(df, id, times, mapas):
 
     return df_antes, df_depois
 
-#def ECDFPlot(df, col):
+def ECDFPlot(df, col):
+
+    rc = {'figure.figsize':(8,4.5),
+          'axes.facecolor':'#0e1117',
+          'axes.edgecolor': '#0e1117',
+          'axes.labelcolor': 'white',
+          'figure.facecolor': '#0e1117',
+          'patch.edgecolor': '#0e1117',
+          'text.color': 'white',
+          'xtick.color': 'white',
+          'ytick.color': 'white',
+          'grid.color': 'grey',
+          'font.size' : 9,
+          'axes.labelsize': 12,
+          'xtick.labelsize': 9,
+          'ytick.labelsize': 14}
+    plt.rcParams.update(rc)
+    ecdf = ECDF(df[col])
+    fig, ax = plt.subplots()
+
+    ax = sns.ecdfplot(data=df, x=col, color='#f94555')
+    plt.axvline(df[col].mean(), 0,1, color='white')
+    plt.xlabel('Valor')
+    plt.ylabel('Proporção')
+    plt.title(f'Distribuição Cumulativa de {col}')
+    st.pyplot(fig)
 
 def Distplot(df, col):
 
@@ -114,6 +140,35 @@ def Countplot(df, col,num_obj):
   
     st.pyplot(fig)
 
+def CorrPlot(df, cols, data='player'):
+    
+    if data == 'player': cols = cols
+    else: cols = cols = cols + ['Win Rate']
+    corr_spearman = round(df[cols].corr(method='pearson'),3)
+    mask = np.zeros_like(corr_spearman)
+    mask[np.triu_indices_from(mask)] = True
+    fig,ax = plt.subplots()
+    
+    rc = {'figure.figsize':(8,4.5),
+          'axes.facecolor':'#0e1117',
+          'axes.edgecolor': '#0e1117',
+          'axes.labelcolor': 'white',
+          'figure.facecolor': '#0e1117',
+          'patch.edgecolor': '#0e1117',
+          'text.color': 'white',
+          'xtick.color': 'white',
+          'ytick.color': 'white',
+          'grid.color': 'grey',
+          'font.size' : 9,
+          'axes.labelsize': 12,
+          'xtick.labelsize': 9,
+          'ytick.labelsize': 14}
+    
+    plt.rcParams.update(rc)
+
+    ax = sns.heatmap(corr_spearman,  fmt="f", vmin=0, vmax=1, mask=mask, annot=True)
+    st.pyplot(fig)
+
 def DownloadPlot(fig):
 
     buffer = StringIO()
@@ -140,57 +195,55 @@ MAPAS = df_times.Mapa.unique()
 ID_PARTIDA = df_times['ID Partida'].unique()
 TITLE = "INTERFACE WEB DE VISUALIZAÇÃO DE ESTATÍSTICAS DO CENÁRIO COMPETITIVO BRASILEIRO DE VALORANT"
 
-
-#st.image('../img/VALORANT_LOGO.png', width = 750)
 st.set_page_config(page_title=TITLE,layout='wide')
-
 f'''# {TITLE} '''
 
-## Storytelling
+## Storytelling / Documentacao
+with st.expander('Introdução'):
+    '''
+    Valorant como promessa dos FPS.
 
-'''
-# 1. Introdução
+    Organizações investindo nos times e em profissionais técnicos.
 
-Valorant como promessa dos FPS.
+    Plataformas já existentes para estudo de adversário e aprimoramento tático.
 
-Organizações investindo nos times e em profissionais técnicos.
+    Trabalho visa implementar os conceitos aprendidos ao longo do curso utilizando técnicas de mineração de dados, KDD
+    para a identificação de padrões e quantificação das principais métricas de performance de times e jogadores.
 
-Plataformas já existentes para estudo de adversário e aprimoramento tático.
+    As análises são divulgadas ao público interessado através desta interface.
+    '''
 
-Trabalho visa implementar os conceitos aprendidos ao longo do curso utilizando técnicas de mineração de dados, KDD
-para a identificação de padrões e quantificação das principais métricas de performance de times e jogadores.
+with st.expander('Metodologia'):
+    '''
 
-As análises são divulgadas ao público interessado através desta interface.
+    ### Fonte de Dados
 
-# 2. Metodologia
+    Website www.vlr.gg, pioneiro na divulgação de resultados e estatísticas dos principais campeonatos de valorant.
 
-## 2.1 Fonte de Dados
+    Estatísticas dispostas principalmente em tabelas HTML e containers específicos divididas principalmente em "Overview", "Performance" e "Economy"
 
-Website www.vlr.gg, pioneiro na divulgação de resultados e estatísticas dos principais campeonatos de valorant.
+    ### Extração e Armazenamento dos Dados
 
-Estatísticas dispostas principalmente em tabelas HTML e containers específicos divididas principalmente em "Overview", "Performance" e "Economy"
+    Extração realizada através de web scraping (pandas + beautiful soup). Páginas são acessadas através do id de suas respectivas partiads
 
-## 2.2 Extração dos Dados
+    Dados extraídos são armazenados localmente em arquivos CSV para fácil acesso futuro.
 
-Extração realizada através de web scraping (pandas + beautiful soup). Páginas são acessadas através do id de suas respectivas partiads
+    ### Análise de Dados
+    '''
 
-## 2.3 Armazenamento dos Dados
-
-Dados extraídos são armazenados localmente em arquivos CSV para fácil acesso futuro.
-
-## 2.4 Análise de Dados
-
-# 3. Resultados
-
-## 3.1 Base de Dados
-## 3.2 Interface Web
-
-# 4. Conclusão
-
----
-'''
+with st.expander('Resultados'):
+    '''
+    ### Base de Dados
 
 
+    ### Interface Web
+    '''
+
+with st.expander('Conclusão'):
+    '''
+    '''
+
+'''---'''
 
 ##QUAIS FILTROS EU QUERO PARA OS DADOS
 # TIMES
@@ -248,7 +301,8 @@ st.sidebar.markdown('''
 ## Filtros dos gráficos de Times
 ''')
 col_count_time = st.sidebar.selectbox('Selecione a coluna para apresentar no gráfico de Contagem Times', options = df_times.select_dtypes(include=['object']).columns, index=1)
-col_dist_jogador = st.sidebar.selectbox('Selecione a coluna para apresentar no gráfico de Distribuição', options = df_times.select_dtypes(exclude=['object']).columns, index=1)
+col_dist_time = st.sidebar.selectbox('Selecione a coluna para apresentar no gráfico de Distribuição', options = df_times.select_dtypes(exclude=['object']).columns, index=1)
+cols_corr_time = st.sidebar.multiselect('Seleciona as colunas para o gráfico de Correlação - Jogadores', options = df_times.columns)
 num_obj = st.sidebar.slider('Quantidade de valores do gráfico de Contagem', min_value=1, max_value=20, value=20)
 ## -------------------------------
 
@@ -262,13 +316,21 @@ with row3_2:
     Countplot(filter_times_novo, col_count_time, num_obj)
 
 ## Graficos de Distribuicao Times -- Antes x Depois
-row4_1, row4_2  = st.columns(2)
-with row4_1:
+with row3_1:
     f'''### Gráfico de Distribuição - Dados Antes ID {filtro_id}'''
-    Distplot(filter_times_antigo, col_dist_jogador)
-with row4_2:
+    ECDFPlot(filter_times_antigo, col_dist_time)
+    #Distplot(filter_times_antigo, col_dist_jogador)
+with row3_2:
     f'''### Gráfico de Distribuição - Dados Após ID {filtro_id}'''
-    Distplot(filter_times_novo, col_dist_jogador    )
+    ECDFPlot(filter_times_novo, col_dist_time)
+    #Distplot(filter_times_novo, col_dist_jogador)
+
+with row3_1:
+    f'''### Gráfico de Contagem - Dados Antes ID {filtro_id}'''
+    CorrPlot(filter_times_antigo, cols_corr_time, data='time')
+with row3_2:
+    f'''### Gráfico de Contagem - Dados Após ID {filtro_id}'''
+    CorrPlot(filter_times_novo, cols_corr_time, data='time')
 
 ## Sidebar -----------------------
 st.sidebar.markdown(''' 
@@ -278,13 +340,15 @@ st.sidebar.markdown('''
 
 col_count_jogador = st.sidebar.selectbox('Selecione a coluna para apresentar no gráfico de Contagem - Jogadores', options = df_jogadores.select_dtypes(include=['object']).columns)
 col_dist_jogador = st.sidebar.selectbox('Selecione a coluna para apresentar no gráfico de Distribuição - Jogadores', options = df_jogadores.select_dtypes(exclude=['object']).columns)
+cols_corr_jogador = st.sidebar.multiselect('Seleciona as colunas para o gráfico de Correlação - Jogadores', options = df_jogadores.columns)
 #num_obj = st.sidebar.slider('Quantidade de observações do gráfico', min_value=1, max_value=20)
 ## -------------------------------
 
 st.markdown('''---''')
-## Dados Jogadores Filtrados
-row5_spacer1, row5_1, row5_spacer2, row5_2, row5_spacer3  = st.columns((.2, 4, .4, 4, .2))
 filter_jogador_antigo, filter_jogador_novo = FilterJogadores(df_jogadores, filtro_id, filtro_times, filtro_agentes, filtro_mapas)
+
+## Dados Jogadores Filtrados
+row5_1,  row5_2,  = st.columns(2)
 with row5_1:
     '''### Dados Filtrados Jogadores - Antes ID'''
     st.write(f'Total de Linhas - {filter_jogador_antigo.shape[0]}')
@@ -295,12 +359,30 @@ with row5_2:
     st.write(filter_jogador_novo)
 
 ## Graficos de Contagem Times -- Antes x Depois
-row3_spacer1,row3_1, row3_spacer2, row3_2, row3_spacer3  = st.columns((.2, 2, .4, 2, .2))
-with row3_1:
+with row5_1:
     f'''### Gráfico de Distribuição - Dados Antes ID {filtro_id}'''
-    Distplot(filter_jogador_antigo, col_dist_jogador)
-    Countplot(filter_jogador_antigo, col_count_jogador, num_obj)
-with row3_2:
+    ECDFPlot(filter_jogador_antigo, col_dist_jogador)
+    #Countplot(filter_jogador_antigo, col_count_jogador, num_obj)
+with row5_2:
     f'''### Gráfico de Distribuição - Dados Após ID {filtro_id}'''
-    Distplot(filter_jogador_novo, col_dist_jogador)
+    ECDFPlot(filter_jogador_novo, col_dist_jogador)
+    #Countplot(filter_jogador_novo, col_count_jogador, num_obj)
+
+## Graficos de Contagem Jogadores -- Antes x Depois
+with row5_1:
+    f'''### Gráfico de Contagem - Dados Antes ID {filtro_id}'''
+    #ECDFPlot(filter_jogador_antigo, col_dist_jogador)
+    Countplot(filter_jogador_antigo, col_count_jogador, num_obj)
+with row5_2:
+    f'''### Gráfico de Contagem - Dados Após ID {filtro_id}'''
+    #ECDFPlot(filter_jogador_novo, col_dist_jogador)
     Countplot(filter_jogador_novo, col_count_jogador, num_obj)
+
+## Graficos de Correlação Jogadores -- Antes x Depois
+with row5_1:
+    f'''### Gráfico de Contagem - Dados Antes ID {filtro_id}'''
+    CorrPlot(filter_jogador_antigo, cols_corr_jogador)
+
+with row5_2:
+    f'''### Gráfico de Contagem - Dados Após ID {filtro_id}'''
+    CorrPlot(filter_jogador_novo, cols_corr_jogador)
